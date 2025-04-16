@@ -76,3 +76,11 @@ def sendtelegram(CONFIG,text):
         response = requests.request("POST", url, headers=headers, data=json.dumps(body))
         text1 = response.text
         print(text1)
+
+def check_parma_and_load(ddict,nomeparam):
+    retval =""
+    try:
+        retval = ddict[nomeparam]
+    except:
+        retval = None
+    return retval
