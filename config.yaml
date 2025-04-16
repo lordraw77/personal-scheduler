@@ -1,0 +1,3 @@
+logfilepath: "./logs"
+logbackupsize: !ENV ${PS_LOGBACKUPSIZE:10}
+loglevel:  !ENV ${PS_LOGLEVEL:INFO}

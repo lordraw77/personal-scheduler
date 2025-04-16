@@ -1,0 +1,12 @@
+APScheduler
+Pillow
+bcrypt
+paramiko
+cron-descriptor
+pyyaml
+requests
+psycopg2-binary
+pythonping
+numpy
+setuptools
+pyaml_env
