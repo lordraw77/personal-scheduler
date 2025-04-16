@@ -1,6 +1,8 @@
+import logging
 import sqlite3
 import json
 from typing import Dict, List, Optional, Any, Union
+logger = logging.getLogger()
 
 class CronConf:
 
@@ -29,7 +31,7 @@ class CronConf:
             return True
             
         except sqlite3.Error as e:
-            print(f"Errore durante la creazione della tabella: {e}")
+            logger.error(f"Error create table: {e}")
             return False
         finally:
             if conn:
@@ -43,7 +45,7 @@ class CronConf:
             cursor = conn.cursor()
             cursor.execute("SELECT jobid FROM cronconf WHERE jobid = ?", (jobid,))
             if cursor.fetchone():
-                print(f"Job con ID '{jobid}' esiste già. Usa la funzione update_job per aggiornarlo.")
+                logger.info(f"Job with ID '{jobid}' exist")
                 return False
             conf_json = json.dumps(conf)
             cursor.execute('''
@@ -55,7 +57,7 @@ class CronConf:
             return True
             
         except sqlite3.Error as e:
-            print(f"Errore durante l'inserimento del job: {e}")
+            logger.error(f"Error insert job: {e}")
             return False
         finally:
             if conn:
@@ -88,7 +90,7 @@ class CronConf:
                 return None
                 
         except sqlite3.Error as e:
-            print(f"Errore durante la lettura del job: {e}")
+            logger.error(f"Erorr during job: {e}")
             return None
         finally:
             if conn:
@@ -119,7 +121,7 @@ class CronConf:
             return jobs
                 
         except sqlite3.Error as e:
-            print(f"Errore durante la lettura dei job: {e}")
+            logger.error(f"Error reading job: {e}")
             return []
         finally:
             if conn:
@@ -135,7 +137,7 @@ class CronConf:
             
             current_job = self.read_job(jobid)
             if not current_job:
-                print(f"Job con ID '{jobid}' non trovato.")
+                logger.info(f"Job with ID '{jobid}' not found.")
                 return False
             new_cronexpr = cronexpr if cronexpr is not None else current_job['cronexpr']
             new_crondecode = crondecode if crondecode is not None else current_job['crondecode']
@@ -149,14 +151,14 @@ class CronConf:
             ''', (new_cronexpr, new_crondecode, conf_json, jobid))
             
             if cursor.rowcount == 0:
-                print(f"Nessun job aggiornato con ID '{jobid}'.")
+                logger.info(f"no job fonund with ID '{jobid}'.")
                 return False
                 
             conn.commit()
             return True
             
         except sqlite3.Error as e:
-            print(f"Errore durante l'aggiornamento del job: {e}")
+            logger.error(f"erorr update job: {e}")
             return False
         finally:
             if conn:
@@ -172,14 +174,14 @@ class CronConf:
             cursor.execute('DELETE FROM cronconf WHERE jobid = ?', (jobid,))
             
             if cursor.rowcount == 0:
-                print(f"Nessun job trovato con ID '{jobid}'.")
+                logger.info(f"job don't found by ID '{jobid}'.")
                 return False
                 
             conn.commit()
             return True
             
         except sqlite3.Error as e:
-            print(f"Errore durante l'eliminazione del job: {e}")
+            logger.error(f"error delete job: {e}")
             return False
         finally:
             if conn:
@@ -204,7 +206,7 @@ class CronConf:
             return True
             
         except sqlite3.Error as e:
-            print(f"Errore durante l'inserimento/aggiornamento del job: {e}")
+            logger.error(f"error insert/update job: {e}")
             return False
         finally:
             if conn:
@@ -229,7 +231,6 @@ class CronConf:
             
             jobs = []
             for row in cursor.fetchall():
-                # Converte la stringa JSON in dizionario
                 conf_dict = json.loads(row['conf']) if row['conf'] else {}
                 
                 jobs.append({
@@ -242,102 +243,9 @@ class CronConf:
             return jobs
                 
         except sqlite3.Error as e:
-            print(f"Errore durante la ricerca dei job: {e}")
+            logger.error(f"error during search job: {e}")
             return []
         finally:
             if conn:
                 conn.close()
 
-
-if __name__ == "__main__":
-    db_path = "database.db"  # Sostituisci con il tuo percorso
-    crud = CronConfCrud(db_path)
-    
-    # Esempio di creazione
-    job1 = {
-        "jobid": "backup_daily",
-        "cronexpr": "0 0 * * *",
-        "crondecode": "Ogni giorno a mezzanotte",
-        "conf": {
-            "command": "/usr/bin/backup.sh",
-            "timeout": 3600,
-            "notify_email": "admin@example.com"
-        }
-    }
-    
-    job2 = {
-        "jobid": "cleanup_weekly",
-        "cronexpr": "0 0 * * 0",
-        "crondecode": "Ogni domenica a mezzanotte",
-        "conf": {
-            "command": "/usr/bin/cleanup.sh",
-            "timeout": 7200,
-            "notify_email": "admin@example.com"
-        }
-    }
-    
-    # Creazione job
-    print("Creazione job...")
-    crud.create_job(job1["jobid"], job1["cronexpr"], job1["crondecode"], job1["conf"])
-    crud.create_job(job2["jobid"], job2["cronexpr"], job2["crondecode"], job2["conf"])
-    
-    # Lettura job
-    print("\nLettura job 'backup_daily':")
-    job = crud.read_job("backup_daily")
-    if job:
-        print(f"ID: {job['jobid']}")
-        print(f"Cron: {job['cronexpr']}")
-        print(f"Decodifica: {job['crondecode']}")
-        print(f"Configurazione: {job['conf']}")
-    
-    # Lettura di tutti i job
-    print("\nTutti i job:")
-    all_jobs = crud.read_all_jobs()
-    for job in all_jobs:
-        print(f"ID: {job['jobid']}, Cron: {job['cronexpr']}")
-    
-    # Aggiornamento job
-    print("\nAggiornamento job 'backup_daily'...")
-    updated_conf = {
-        "command": "/usr/bin/backup.sh",
-        "timeout": 4800,  # Modificato
-        "notify_email": "admin@example.com",
-        "compress": True  # Aggiunto
-    }
-    crud.update_job("backup_daily", cronexpr="0 0 * * *", conf=updated_conf)
-    
-    # Verifica aggiornamento
-    print("\nJob aggiornato:")
-    updated_job = crud.read_job("backup_daily")
-    if updated_job:
-        print(f"ID: {updated_job['jobid']}")
-        print(f"Configurazione: {updated_job['conf']}")
-    
-    # Upsert (inserimento o aggiornamento)
-    print("\nUpsert job 'system_hourly'...")
-    new_job = {
-        "jobid": "system_hourly",
-        "cronexpr": "0 * * * *",
-        "crondecode": "Ogni ora",
-        "conf": {
-            "command": "/usr/bin/system_check.sh",
-            "timeout": 300
-        }
-    }
-    crud.upsert_job(new_job["jobid"], new_job["cronexpr"], new_job["crondecode"], new_job["conf"])
-    
-    # Ricerca job
-    print("\nRicerca job con 'daily':")
-    search_results = crud.search_jobs("daily")
-    for job in search_results:
-        print(f"ID: {job['jobid']}, Decodifica: {job['crondecode']}")
-    
-    # Eliminazione job
-    print("\nEliminazione job 'cleanup_weekly'...")
-    crud.delete_job("cleanup_weekly")
-    
-    # Verifica eliminazione
-    print("\nTutti i job dopo eliminazione:")
-    remaining_jobs = crud.read_all_jobs()
-    for job in remaining_jobs:
-        print(f"ID: {job['jobid']}, Cron: {job['cronexpr']}")

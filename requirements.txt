@@ -10,3 +10,5 @@ pythonping
 numpy
 setuptools
 pyaml_env
+dotenv
+python-dotenv

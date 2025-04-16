@@ -1,3 +1,6 @@
 logfilepath: "./logs"
 logbackupsize: !ENV ${PS_LOGBACKUPSIZE:10}
 loglevel:  !ENV ${PS_LOGLEVEL:INFO}
+sendtelegram: !ENV ${PS_SENDTELEGRAM:True}
+botkey: !ENV ${PS_BOTKEY}
+chatid: !ENV ${PS_CHATID}

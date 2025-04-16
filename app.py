@@ -1,15 +1,26 @@
+from datetime import timezone
+import importlib
+import json
 from logging.handlers import TimedRotatingFileHandler
 import util.common as common
 import util.config as config
 import util.cronConfCrud as CronConfCrud
+import util.perfdataCrud as PerfdataCrud
 import util.db as db
 import logging
 import sys
 import os
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+from dotenv import load_dotenv
 
+
+scheduled_jobs_map = {}
+
+load_dotenv()  
 
 CONFIG =  config.Config("./config.yaml")        
-
+print(CONFIG.conf)
 logger = logging.getLogger()
 
 #formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s %(message)s')
@@ -52,99 +63,151 @@ if db.check_table_exists(db_path, table_cronconf):
 else:
     logger.error(f"the table '{table_cronconf}' don't exists")
     db.create_cronconf_table(db_path)
+    
+crudconf = CronConfCrud.CronConf(db_path)
+crudprefdata= PerfdataCrud.Perfdata(db_path)
+        
+
+def get_method(module,method):
+    mymethod = getattr(importlib.import_module(module), method)
+    return mymethod
+
+def schedule_jobs(scheduler):
+    jobs = retrieve_jobs_to_schedule()
+    for job in jobs: 
+        add_job_if_applicable(job, scheduler)
+        update_job_if_applicable(job, scheduler)
+
+    #logger.info(f"{datetime.now()} refreshed scheduled jobs")
+
+def retrieve_jobs_to_schedule():
+    cwd = os.getcwd()
+    jobs = []
+    jobfolder="job.d"
+    jobfolderd = os.path.join(cwd,jobfolder)
+    for file in os.listdir(jobfolderd):
+        if file.endswith(".json"):
+            logger.debug(f"load job {file}")
+            with open(os.path.join(jobfolderd, file),'r') as file:
+                jobs.extend(json.load(file))
+
+    return jobs
+
+
+def add_job_if_applicable(job, scheduler): 
+    job_id = str(job['id'])
+    if (job_id not in scheduled_jobs_map):
+        scheduled_jobs_map[job_id] = job
+        scheduler.add_job(lambda: execute_job(job), CronTrigger.from_crontab(job['cron_expression'], timezone=timezone("Europe/Rome")), id=job_id)
+        message = "added job with id: " + str(job_id) + " "+ job['cron_expression'] + "  " + common.crondecode(job['cron_expression'])
+        crudconf.create_job(job_id, job['cron_expression'], common.crondecode(job['cron_expression']), job)
+        #print(message)
+        logger.info(message)
+
+def update_job_if_applicable(job, scheduler):
+    job_id = str(job['id'])
+    if job_id == "EDA-PG1":
+        pass
+    if (job_id not in scheduled_jobs_map):
+        return
+    disabled = False
+    try:
+        disabled = bool(scheduled_jobs_map[job_id]['disabled'])
+    except:
+        pass
+    
+    last_version = scheduled_jobs_map[job_id]['version']
+    current_version = job['version']
+    if (disabled == True):
+        scheduler.remove_job(job_id)
+        edb.deleteConf(config,logger,job)
+        return
+    if (bool(job == scheduled_jobs_map[job_id])==False):
+        scheduled_jobs_map[job_id]['version'] = current_version
+        scheduler.remove_job(job_id)
+        scheduler.add_job(lambda: execute_job(job), CronTrigger.from_crontab(job['cron_expression'], timezone=timezone("Europe/Rome")), id=job_id)
+        message = "updated job with id: " + str(job_id) + " "+ job['cron_expression'] + "  " + common.crondecode(job['cron_expression'])
+        edb.insertOrUpdateConf(config,logger,job,common.crondecode(job['cron_expression']))
+        #print(message)
+        logger.info(message)
+ 
+def execute_job(job):
+    REQUESTS.inc()
+    REQUEST.set_to_current_time()
+    time_request = time.time()
+    try:
+        counter.labels(str(job['id'])).inc()
+    except :
+        counter.labels(str(job['id']))
+        counter.labels(str(job['id'])).inc()
+        pass
+    message = f"{datetime.now()} executing job with id:  {str(job['id'])} {job['module']}  {job['method']}"
+    #print(message)
+    logger.info(message)
+    methodtoexecute = get_method(job['module'],job['method'])
+    paramd = {}
+    paramd = check_parma_and_load(job,'param')
+    notify =  check_parma_and_load(job,'notify')
+    notifymessage =  check_parma_and_load(job,'notifymessage')
+    notifymethod =  check_parma_and_load(job,'notifymethod')
+    notifysubject=  check_parma_and_load(job,'notifysubject')
+    storedb=  check_parma_and_load(job,'storedb')
+    notifyforced = check_parma_and_load(job,'notifyforced')
+    paramd.update( config)
+    retval =""
+    if paramd:
+       retval= methodtoexecute(paramd,logger)   
+       message= f"executed {job['id']} {job['module']} {job['method']} the result are {retval}"
+       
+       logger.info(message)
+    else:
+        methodtoexecute(datetime.now())  
+    if retval != "":  
+        if notifymethod:
+            logger.info(notifymethod)
+            for _notifymet in notifymethod.split(","):
+                logger.debug(_notifymet)
+                if _notifymet.lower() == "telegram":
+                    if notify and notifymessage:
+                        globals()['retval']=retval
+                        globals().update(paramd)
+                        if bool(check_for_notify(notify)):
+                            mes = effify(notifymessage)
+                            notifyservice.sendtelegram(mes,logger,config,job['id'],notifyforced)
+                            TELEGRAM.inc()
+                elif _notifymet.lower() =="mail":   
+                    globals()['retval']=retval
+                    globals().update(paramd)
+                    if bool(check_for_notify(notify)):
+                        mes = effify(notifymessage)
+                        subject = f"output {job['id']}"
+                        if notifysubject:
+                            subject =notifysubject 
+                        notifyservice.sendmail(mes,subject,logger,config,job['id'],notifyforced)
+                        MAIL.inc()
+        if bool(storedb) == True:
+            edb.insertperfdata(config,logger,job['id'],retval)
+         
+
+    if retval:
+        logger.info(f"job {job['id']} executed retval={retval}")
+        RESPONSE.set_to_current_time()
+        time_response = time.time()
+        LATENCY.observe(time_response - time_request)
+
+    else:
+        logger.info(f"job {job['id']} executed {datetime.now()}")
+        RESPONSE.set_to_current_time()
+        time_response = time.time()
+        LATENCY.observe(time_response - time_request)
+
+ 
 
 
 
 
-crud = CronConfCrud.CronConf(db_path)
 
-# Esempio di creazione
-job1 = {
-    "jobid": "backup_daily",
-    "cronexpr": "0 0 * * *",
-    "crondecode": "Ogni giorno a mezzanotte",
-    "conf": {
-        "command": "/usr/bin/backup.sh",
-        "timeout": 3600,
-        "notify_email": "admin@example.com"
-    }
-}
 
-job2 = {
-    "jobid": "cleanup_weekly",
-    "cronexpr": "0 0 * * 0",
-    "crondecode": "Ogni domenica a mezzanotte",
-    "conf": {
-        "command": "/usr/bin/cleanup.sh",
-        "timeout": 7200,
-        "notify_email": "admin@example.com"
-    }
-}
 
-# Creazione job
-print("Creazione job...")
-crud.create_job(job1["jobid"], job1["cronexpr"], job1["crondecode"], job1["conf"])
-crud.create_job(job2["jobid"], job2["cronexpr"], job2["crondecode"], job2["conf"])
 
-# Lettura job
-print("\nLettura job 'backup_daily':")
-job = crud.read_job("backup_daily")
-if job:
-    print(f"ID: {job['jobid']}")
-    print(f"Cron: {job['cronexpr']}")
-    print(f"Decodifica: {job['crondecode']}")
-    print(f"Configurazione: {job['conf']}")
-
-# Lettura di tutti i job
-print("\nTutti i job:")
-all_jobs = crud.read_all_jobs()
-for job in all_jobs:
-    print(f"ID: {job['jobid']}, Cron: {job['cronexpr']}")
-
-# Aggiornamento job
-print("\nAggiornamento job 'backup_daily'...")
-updated_conf = {
-    "command": "/usr/bin/backup.sh",
-    "timeout": 4800,  # Modificato
-    "notify_email": "admin@example.com",
-    "compress": True  # Aggiunto
-}
-crud.update_job("backup_daily", cronexpr="0 0 * * *", conf=updated_conf)
-
-# Verifica aggiornamento
-print("\nJob aggiornato:")
-updated_job = crud.read_job("backup_daily")
-if updated_job:
-    print(f"ID: {updated_job['jobid']}")
-    print(f"Configurazione: {updated_job['conf']}")
-
-# Upsert (inserimento o aggiornamento)
-print("\nUpsert job 'system_hourly'...")
-new_job = {
-    "jobid": "system_hourly",
-    "cronexpr": "0 * * * *",
-    "crondecode": "Ogni ora",
-    "conf": {
-        "command": "/usr/bin/system_check.sh",
-        "timeout": 300
-    }
-}
-crud.upsert_job(new_job["jobid"], new_job["cronexpr"], new_job["crondecode"], new_job["conf"])
-
-# Ricerca job
-print("\nRicerca job con 'daily':")
-search_results = crud.search_jobs("daily")
-for job in search_results:
-    print(f"ID: {job['jobid']}, Decodifica: {job['crondecode']}")
-
-# Eliminazione job
-print("\nEliminazione job 'cleanup_weekly'...")
-crud.delete_job("cleanup_weekly")
-
-# Verifica eliminazione
-print("\nTutti i job dopo eliminazione:")
-remaining_jobs = crud.read_all_jobs()
-for job in remaining_jobs:
-    print(f"ID: {job['jobid']}, Cron: {job['cronexpr']}")
-    print(f"delete {job['jobid']}")
-    crud.delete_job(job['jobid'])
+common.sendtelegram(CONFIG,"start")

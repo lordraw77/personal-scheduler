@@ -1,14 +1,15 @@
 from cron_descriptor import Options, CasingTypeEnum, DescriptionTypeEnum, ExpressionDescriptor
 from datetime import datetime, time
+import requests
+import json
 
-
-def load_env_parameter(envparma, env : dict,config: dict):
-    config[envparma] = "na"
+def load_env_parameter(envparma, env : dict,CONFIG: dict):
+    CONFIG[envparma] = "na"
     try:
-        config[envparma] = env[envparma]
+        CONFIG[envparma] = env[envparma]
     except:
         pass    
-    return  config.copy()
+    return  CONFIG.copy()
 
 def crondecode(cronexpr):
     options = Options()
@@ -38,3 +39,40 @@ def check_parma_and_load(ddict,nomeparam):
     except:
         retval = None
     return retval
+def checkAllowSendTelegram(CONFIG):
+    try:
+        DUCKDNS_SENDTELEGRAM=CONFIG.SENDTELEGRAM
+    except:
+        DUCKDNS_SENDTELEGRAM=False
+    return bool(DUCKDNS_SENDTELEGRAM)
+
+def sendtelegram(CONFIG,text):
+    print("1")
+    if checkAllowSendTelegram(CONFIG) == True:
+        print("2")
+        try:
+            PS_BOTKEY = CONFIG.BOTKEY
+        except KeyError:
+            print("PS_BOTKEY not found in environment variables.")
+            return
+        try:
+            PS_CHATID = CONFIG.CHATID
+        except KeyError:
+            print("PS_CHATID not found in environment variables.")
+            return
+
+        body =  {}
+        botkey = PS_BOTKEY
+        chat = PS_CHATID
+        
+        url = f"https://api.telegram.org/{botkey}/sendMessage"
+
+        headers = {
+                'Content-Type': 'application/json'
+            }
+
+        body["chat_id"]=chat
+        body["text"]=f"{text}"
+        response = requests.request("POST", url, headers=headers, data=json.dumps(body))
+        text1 = response.text
+        print(text1)
