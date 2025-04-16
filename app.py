@@ -201,7 +201,26 @@ def execute_job(job):
         time_response = time.time()
         LATENCY.observe(time_response - time_request)
 
- 
+notifyservice.sendtelegram(f"start openmonitoring with {json.dumps(config)}",logger,config,forced=True)
+
+now = datetime.now()
+notifyservice.sendtelegram(f"start  at {now}",logger,config,forced=True)
+
+from apscheduler.schedulers import background
+job_defaults = {
+    'coalesce': False,
+    'max_instances': 10
+}
+
+
+start_http_server(8000)
+#scheduler = BackgroundScheduler(timezone=timezone("Europe/Rome"))
+scheduler = background.BlockingScheduler(job_defaults=job_defaults,timezone=timezone("Europe/Rome"))
+# scheduler.configure( job_defaults=job_defaults)
+
+scheduler.add_job(lambda: schedule_jobs(scheduler), 'interval', seconds=5, next_run_time=datetime.now(), id='scheduler-job-id')
+scheduler.start()
+
 
 
 
