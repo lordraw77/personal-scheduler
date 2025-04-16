@@ -1,1 +1,1 @@
-# personal-scheduler
+# personal scheduler
