@@ -1,4 +1,4 @@
-from datetime import timezone
+from datetime import datetime, timezone
 import importlib
 import json
 from logging.handlers import TimedRotatingFileHandler
@@ -106,8 +106,6 @@ def add_job_if_applicable(job, scheduler):
 
 def update_job_if_applicable(job, scheduler):
     job_id = str(job['id'])
-    if job_id == "EDA-PG1":
-        pass
     if (job_id not in scheduled_jobs_map):
         return
     disabled = False
@@ -120,46 +118,36 @@ def update_job_if_applicable(job, scheduler):
     current_version = job['version']
     if (disabled == True):
         scheduler.remove_job(job_id)
-        edb.deleteConf(config,logger,job)
+        crudconf.delete_job(str(job['id']))
         return
     if (bool(job == scheduled_jobs_map[job_id])==False):
         scheduled_jobs_map[job_id]['version'] = current_version
         scheduler.remove_job(job_id)
         scheduler.add_job(lambda: execute_job(job), CronTrigger.from_crontab(job['cron_expression'], timezone=timezone("Europe/Rome")), id=job_id)
         message = "updated job with id: " + str(job_id) + " "+ job['cron_expression'] + "  " + common.crondecode(job['cron_expression'])
-        edb.insertOrUpdateConf(config,logger,job,common.crondecode(job['cron_expression']))
+        crudconf.upsert_job(job_id, job['cron_expression'], common.crondecode(job['cron_expression']), job)
         #print(message)
         logger.info(message)
  
 def execute_job(job):
-    REQUESTS.inc()
-    REQUEST.set_to_current_time()
-    time_request = time.time()
-    try:
-        counter.labels(str(job['id'])).inc()
-    except :
-        counter.labels(str(job['id']))
-        counter.labels(str(job['id'])).inc()
-        pass
     message = f"{datetime.now()} executing job with id:  {str(job['id'])} {job['module']}  {job['method']}"
     #print(message)
     logger.info(message)
     methodtoexecute = get_method(job['module'],job['method'])
     paramd = {}
-    paramd = check_parma_and_load(job,'param')
-    notify =  check_parma_and_load(job,'notify')
-    notifymessage =  check_parma_and_load(job,'notifymessage')
-    notifymethod =  check_parma_and_load(job,'notifymethod')
-    notifysubject=  check_parma_and_load(job,'notifysubject')
-    storedb=  check_parma_and_load(job,'storedb')
-    notifyforced = check_parma_and_load(job,'notifyforced')
+    paramd = common.check_parma_and_load(job,'param')
+    notify =  common.check_parma_and_load(job,'notify')
+    notifymessage =  common.check_parma_and_load(job,'notifymessage')
+    notifymethod =  common.check_parma_and_load(job,'notifymethod')
+    notifysubject=  common.check_parma_and_load(job,'notifysubject')
+    storedb=  common.check_parma_and_load(job,'storedb')
+    notifyforced = common.check_parma_and_load(job,'notifyforced')
     paramd.update( config)
     retval =""
     if paramd:
-       retval= methodtoexecute(paramd,logger)   
-       message= f"executed {job['id']} {job['module']} {job['method']} the result are {retval}"
-       
-       logger.info(message)
+        retval= methodtoexecute(paramd,logger)   
+        message= f"executed {job['id']} {job['module']} {job['method']} the result are {retval}"
+        logger.info(message)
     else:
         methodtoexecute(datetime.now())  
     if retval != "":  
@@ -171,40 +159,33 @@ def execute_job(job):
                     if notify and notifymessage:
                         globals()['retval']=retval
                         globals().update(paramd)
-                        if bool(check_for_notify(notify)):
-                            mes = effify(notifymessage)
-                            notifyservice.sendtelegram(mes,logger,config,job['id'],notifyforced)
-                            TELEGRAM.inc()
+                        if bool(common.check_for_notify(notify)):
+                            mes = common.effify(notifymessage)
+                            #notifyservice.sendtelegram(mes,logger,config,job['id'],notifyforced)
                 elif _notifymet.lower() =="mail":   
                     globals()['retval']=retval
                     globals().update(paramd)
-                    if bool(check_for_notify(notify)):
-                        mes = effify(notifymessage)
+                    if bool(common.check_for_notify(notify)):
+                        mes = common.effify(notifymessage)
                         subject = f"output {job['id']}"
                         if notifysubject:
                             subject =notifysubject 
-                        notifyservice.sendmail(mes,subject,logger,config,job['id'],notifyforced)
-                        MAIL.inc()
+                        #notifyservice.sendmail(mes,subject,logger,config,job['id'],notifyforced)
         if bool(storedb) == True:
-            edb.insertperfdata(config,logger,job['id'],retval)
+            #edb.insertperfdata(config,logger,job['id'],retval)
+            crudprefdata.create_perfdata(job['id'],retval)
          
 
     if retval:
         logger.info(f"job {job['id']} executed retval={retval}")
-        RESPONSE.set_to_current_time()
-        time_response = time.time()
-        LATENCY.observe(time_response - time_request)
-
     else:
         logger.info(f"job {job['id']} executed {datetime.now()}")
-        RESPONSE.set_to_current_time()
-        time_response = time.time()
-        LATENCY.observe(time_response - time_request)
 
-notifyservice.sendtelegram(f"start openmonitoring with {json.dumps(config)}",logger,config,forced=True)
+
+#notifyservice.sendtelegram(f"start openmonitoring with {json.dumps(config)}",logger,config,forced=True)
 
 now = datetime.now()
-notifyservice.sendtelegram(f"start  at {now}",logger,config,forced=True)
+#notifyservice.sendtelegram(f"start  at {now}",logger,config,forced=True)
 
 from apscheduler.schedulers import background
 job_defaults = {
@@ -213,7 +194,6 @@ job_defaults = {
 }
 
 
-start_http_server(8000)
 #scheduler = BackgroundScheduler(timezone=timezone("Europe/Rome"))
 scheduler = background.BlockingScheduler(job_defaults=job_defaults,timezone=timezone("Europe/Rome"))
 # scheduler.configure( job_defaults=job_defaults)

@@ -84,3 +84,6 @@ def check_parma_and_load(ddict,nomeparam):
     except:
         retval = None
     return retval
+
+def check_for_notify(notify):
+    return False
