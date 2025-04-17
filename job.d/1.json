@@ -1,0 +1,19 @@
+[
+    {
+        "id": "checkvico",
+        "cron_expression": "*/1 * * * *",
+        "version": 0,
+        "module": "module.vico",
+        "method": "checkvico",
+        "lib":"requests,json",
+        "param": {
+            "date_from":"2026-08-08",
+            "date_to":"2026-08-22"
+        },
+        "notify": "retval@lambda x: x if x == \"KO\" else False",
+        "notifymessage": "Il servizio checkvico {retval}",
+        "notifysubject": "Il servizio couchfwa di lab non risponde",
+        "notifymethod":"telegram",
+        "storedb": "true"
+    }
+]

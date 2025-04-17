@@ -87,3 +87,16 @@ def check_parma_and_load(ddict,nomeparam):
 
 def check_for_notify(notify):
     return False
+
+def install_and_import(package):
+    import importlib
+    try:
+        importlib.import_module(package)
+    except ImportError:
+        import pip
+        pip.main(['install', package])
+        import site
+        from importlib import reload
+        reload(site)
+    finally:
+        globals()[package] = importlib.import_module(package)
