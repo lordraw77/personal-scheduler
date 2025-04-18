@@ -3,6 +3,7 @@ import sqlite3
 import uuid
 import datetime
 from typing import Dict, List, Optional, Any, Union
+import util.common as common
 logger = logging.getLogger()
 
 class Perfdata:
@@ -38,7 +39,7 @@ class Perfdata:
                 conn.close()
     
     # CREATE
-    def create_perfdata(self, jobname: str, value: str, custom_id: str = None) -> Optional[str]:
+    def create_perfdata(self, jobname: str, value: str, CONFIG, custom_id: str = None) -> Optional[str]:
         conn = None
         try:
             conn = sqlite3.connect(self.db_path)
@@ -46,11 +47,13 @@ class Perfdata:
             
             # Genera un nuovo UUID se non è stato fornito
             record_id = custom_id if custom_id else str(uuid.uuid4())
+            timefomatted = common.calcolateformatted_timestamp(CONFIG)
+
             
             cursor.execute('''
-            INSERT INTO perfdata (id, jobname, value)
-            VALUES (?, ?, ?)
-            ''', (record_id, jobname, value))
+            INSERT INTO perfdata (id, jobname, value, utctsins)
+            VALUES (?, ?, ?, ?)
+            ''', (record_id, jobname, value, timefomatted))
             
             conn.commit()
             return record_id

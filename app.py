@@ -1,4 +1,6 @@
-from datetime import datetime, timezone
+from datetime import datetime
+import pytz 
+from util.comunication import sendtelegram
 import importlib
 import json
 from logging.handlers import TimedRotatingFileHandler
@@ -47,22 +49,22 @@ logger.info("config loaded")
 logger.info(CONFIG.conf)
 
 db_path = "ps.db"
-exists, is_valid = db.check_sqlite_db_exists(db_path)
+# exists, is_valid = db.check_sqlite_db_exists(db_path)
 
-if exists and is_valid:
-    logger.info(f"'{db_path}' exists and is a valid SQLite database.")
-elif exists and not is_valid:
-    logger.error(f"'{db_path}' exists but is not a valid SQLite database.")
-else:
-    logger.error(f"'{db_path}' does not exist.")
+# if exists and is_valid:
+#     logger.info(f"'{db_path}' exists and is a valid SQLite database.")
+# elif exists and not is_valid:
+#     logger.error(f"'{db_path}' exists but is not a valid SQLite database.")
+# else:
+#     logger.error(f"'{db_path}' does not exist.")
 
-table_cronconf = "cronconf"
+# table_cronconf = "cronconf"
 
-if db.check_table_exists(db_path, table_cronconf):
-    logger.info(f" the table '{table_cronconf}'  exists ")
-else:
-    logger.error(f"the table '{table_cronconf}' don't exists")
-    db.create_cronconf_table(db_path)
+# if db.check_table_exists(db_path, table_cronconf):
+#     logger.info(f" the table '{table_cronconf}'  exists ")
+# else:
+#     logger.error(f"the table '{table_cronconf}' don't exists")
+#     db.create_cronconf_table(db_path)
     
 crudconf = CronConfCrud.CronConf(db_path)
 crudprefdata= PerfdataCrud.Perfdata(db_path)
@@ -98,7 +100,7 @@ def add_job_if_applicable(job, scheduler):
     job_id = str(job['id'])
     if (job_id not in scheduled_jobs_map):
         scheduled_jobs_map[job_id] = job
-        scheduler.add_job(lambda: execute_job(job), CronTrigger.from_crontab(job['cron_expression'], timezone=timezone("Europe/Rome")), id=job_id)
+        scheduler.add_job(lambda: execute_job(job), CronTrigger.from_crontab(job['cron_expression'], timezone=pytz.timezone(CONFIG.TIMEZONE)), id=job_id)
         message = "added job with id: " + str(job_id) + " "+ job['cron_expression'] + "  " + common.crondecode(job['cron_expression'])
         crudconf.create_job(job_id, job['cron_expression'], common.crondecode(job['cron_expression']), job)
         #print(message)
@@ -123,7 +125,7 @@ def update_job_if_applicable(job, scheduler):
     if (bool(job == scheduled_jobs_map[job_id])==False):
         scheduled_jobs_map[job_id]['version'] = current_version
         scheduler.remove_job(job_id)
-        scheduler.add_job(lambda: execute_job(job), CronTrigger.from_crontab(job['cron_expression'], timezone=timezone("Europe/Rome")), id=job_id)
+        scheduler.add_job(lambda: execute_job(job), CronTrigger.from_crontab(job['cron_expression'], timezone=pytz.timezone(CONFIG.TIMEZONE)), id=job_id)
         message = "updated job with id: " + str(job_id) + " "+ job['cron_expression'] + "  " + common.crondecode(job['cron_expression'])
         crudconf.upsert_job(job_id, job['cron_expression'], common.crondecode(job['cron_expression']), job)
         #print(message)
@@ -138,11 +140,9 @@ def execute_job(job):
     paramd = common.check_parma_and_load(job,'param')
     notify =  common.check_parma_and_load(job,'notify')
     notifymessage =  common.check_parma_and_load(job,'notifymessage')
-    notifymethod =  common.check_parma_and_load(job,'notifymethod')
-    notifysubject=  common.check_parma_and_load(job,'notifysubject')
-    storedb=  common.check_parma_and_load(job,'storedb')
-    notifyforced = common.check_parma_and_load(job,'notifyforced')
-    paramd.update( config)
+    notifymethod =  common.check_parma_and_load(job,'notifymethod',"telegram")
+    storedb = common.check_parma_and_load(job,"storedb")
+    paramd.update( CONFIG.conf)
     retval =""
     if paramd:
         retval= methodtoexecute(paramd,logger)   
@@ -160,7 +160,8 @@ def execute_job(job):
                         globals()['retval']=retval
                         globals().update(paramd)
                         if bool(common.check_for_notify(notify)):
-                            mes = common.effify(notifymessage)
+                            mes = common.effify(notifymessage,globals())
+                            sendtelegram(CONFIG,mes)
                             #notifyservice.sendtelegram(mes,logger,config,job['id'],notifyforced)
                 elif _notifymet.lower() =="mail":   
                     globals()['retval']=retval
@@ -168,12 +169,12 @@ def execute_job(job):
                     if bool(common.check_for_notify(notify)):
                         mes = common.effify(notifymessage)
                         subject = f"output {job['id']}"
-                        if notifysubject:
-                            subject =notifysubject 
+                        # if notifysubject:
+                        #     subject =notifysubject 
                         #notifyservice.sendmail(mes,subject,logger,config,job['id'],notifyforced)
         if bool(storedb) == True:
             #edb.insertperfdata(config,logger,job['id'],retval)
-            crudprefdata.create_perfdata(job['id'],retval)
+            crudprefdata.create_perfdata(job['id'],retval,CONFIG)
          
 
     if retval:
@@ -192,10 +193,10 @@ job_defaults = {
     'coalesce': False,
     'max_instances': 10
 }
-
+sendtelegram(CONFIG,"start")
 
 #scheduler = BackgroundScheduler(timezone=timezone("Europe/Rome"))
-scheduler = background.BlockingScheduler(job_defaults=job_defaults,timezone=timezone("Europe/Rome"))
+scheduler = background.BlockingScheduler(job_defaults=job_defaults,timezone=pytz.timezone(CONFIG.TIMEZONE))
 # scheduler.configure( job_defaults=job_defaults)
 
 scheduler.add_job(lambda: schedule_jobs(scheduler), 'interval', seconds=5, next_run_time=datetime.now(), id='scheduler-job-id')

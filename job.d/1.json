@@ -12,8 +12,7 @@
         },
         "notify": "retval@lambda x: x if x == \"KO\" else False",
         "notifymessage": "Il servizio checkvico {retval}",
-        "notifysubject": "Il servizio couchfwa di lab non risponde",
         "notifymethod":"telegram",
-        "storedb": "true"
+        "storedb": true
     }
 ]

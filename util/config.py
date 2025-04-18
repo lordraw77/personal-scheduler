@@ -17,15 +17,17 @@ class Config:
     _logfilepath="logfilepath"
     _logbackupsize="logbackupsize"
     _loglevel="loglevel"
-    _sendtelegram="sendtelegram"
+    _cansendtelegram="cansendtelegram"
     _botkey="botkey"
     _chatid="chatid"
+    _timezone="timezone"
     LOGFILEPATH=""
     LOGBACKUPSIZE=""
     LOGLEVEL="" 
     SENDTELEGRAM=""
     BOTKEY=""
     CHATID=""
+    TIMEZONE=""
     
     def _getparam(self,pramname):
         try:
@@ -48,9 +50,11 @@ class Config:
             self.LOGFILEPATH = self._getparam(self._logfilepath)
             self.LOGBACKUPSIZE = self._getparam(self._logbackupsize)
             self.LOGLEVEL = self._getparam(self._loglevel)
-            self.SENDTELEGRAM = self._getparam(self._sendtelegram)
+            self.CANSENDTELEGRAM = self._getparam(self._cansendtelegram)
             self.BOTKEY = self._getparam(self._botkey)
             self.CHATID = self._getparam(self._chatid)
+            self.TIMEZONE = self._getparam(self._timezone)
+            
             #self.env_variables = dotenv_values(".env")
             #self.conf.update(dotenv_values(".env"))
             #print(self.env_variables)

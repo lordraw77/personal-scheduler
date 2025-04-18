@@ -10,7 +10,17 @@ def load_env_parameter(envparma, env : dict,CONFIG: dict):
     except:
         pass    
     return  CONFIG.copy()
+def calcolateformatted_timestamp(CONFIG):
+    from datetime import datetime
+    import pytz
 
+    # Ottieni il timestamp attuale nel fuso orario di Roma
+    _tz = pytz.timezone(CONFIG.TIMEZONE)
+    _time = datetime.now(_tz)
+
+    # Formatta il timestamp come stringa (per SQLite)
+    return  _time.strftime('%Y-%m-%d %H:%M:%S')
+    
 def crondecode(cronexpr):
     options = Options()
     options.throw_exception_on_parse_error = True
@@ -26,7 +36,8 @@ def is_time_between(begin_time, end_time, check_time=None):
     else: 
         return check_time >= begin_time or check_time <= end_time
 
-def effify(non_f_str: str):
+def effify(non_f_str: str,gdict):
+    globals().update(gdict)
     if "{" in non_f_str:
         return eval(f'f"""{non_f_str}"""')
     else:
@@ -39,54 +50,20 @@ def check_parma_and_load(ddict,nomeparam):
     except:
         retval = None
     return retval
-def checkAllowSendTelegram(CONFIG):
-    try:
-        DUCKDNS_SENDTELEGRAM=CONFIG.SENDTELEGRAM
-    except:
-        DUCKDNS_SENDTELEGRAM=False
-    return bool(DUCKDNS_SENDTELEGRAM)
 
-def sendtelegram(CONFIG,text):
-    print("1")
-    if checkAllowSendTelegram(CONFIG) == True:
-        print("2")
-        try:
-            PS_BOTKEY = CONFIG.BOTKEY
-        except KeyError:
-            print("PS_BOTKEY not found in environment variables.")
-            return
-        try:
-            PS_CHATID = CONFIG.CHATID
-        except KeyError:
-            print("PS_CHATID not found in environment variables.")
-            return
-
-        body =  {}
-        botkey = PS_BOTKEY
-        chat = PS_CHATID
-        
-        url = f"https://api.telegram.org/{botkey}/sendMessage"
-
-        headers = {
-                'Content-Type': 'application/json'
-            }
-
-        body["chat_id"]=chat
-        body["text"]=f"{text}"
-        response = requests.request("POST", url, headers=headers, data=json.dumps(body))
-        text1 = response.text
-        print(text1)
-
-def check_parma_and_load(ddict,nomeparam):
+def check_parma_and_load(ddict,nomeparam,default=None):
     retval =""
     try:
         retval = ddict[nomeparam]
     except:
-        retval = None
+        if default!=None:
+            retval=default
+        else:
+            retval = None
     return retval
 
 def check_for_notify(notify):
-    return False
+    return True
 
 def install_and_import(package):
     import importlib

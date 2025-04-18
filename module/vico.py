@@ -1,12 +1,14 @@
 import requests
 import json
-def checkvico(paramd):
+import logging
+def checkvico(paramd,logger):
     url = "https://api.beddy.io/BOL/search"
     # date_from = "2026-08-08"
     # date_to = "2026-08-22"
 
-    # date_from = "2024-08-01"
-    # date_to = "2024-08-17"
+    date_from =  paramd["date_from"] 
+    date_to = paramd["date_to"]
+    
     pl =  {
     "date_from":  paramd["date_from"] ,
     "date_to": paramd["date_to"] ,
@@ -30,7 +32,7 @@ def checkvico(paramd):
     'Referer': 'https://www.lavalledivico.it',
     'Content-Type': 'application/json'
     }
-
+    logger.info(f"checkvico {date_from} {date_to} {payload}")
     response = requests.request("POST", url, headers=headers, data=payload)
 
     #print(response.text)
@@ -44,10 +46,10 @@ def checkvico(paramd):
         # pre = json.dumps(acc,indent=4)
         # print(pre)
         # print(aDict)
-        out =  f"camere disponibili {lacc}  {paramd["date_from"]} - {paramd["date_to"]}"
+        out =  f"camere disponibili {lacc}  {date_from} - {date_to}"
     
     else:
-        out = f"nessuna stanza disponibile per  {paramd["date_from"]} - {paramd["date_to"]}"
+        out = f"nessuna stanza disponibile per  {date_from} - {date_to}"
     
     print(out)
     return out
