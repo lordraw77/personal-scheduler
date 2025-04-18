@@ -1,7 +1,7 @@
 import requests
 import json
 import logging
-def checkvico(paramd,logger):
+def checkvico(paramd):
     url = "https://api.beddy.io/BOL/search"
     # date_from = "2026-08-08"
     # date_to = "2026-08-22"
@@ -32,7 +32,7 @@ def checkvico(paramd,logger):
     'Referer': 'https://www.lavalledivico.it',
     'Content-Type': 'application/json'
     }
-    logger.info(f"checkvico {date_from} {date_to} {payload}")
+    #logger.info(f"checkvico {date_from} {date_to} {payload}")
     response = requests.request("POST", url, headers=headers, data=payload)
 
     #print(response.text)

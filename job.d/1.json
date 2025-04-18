@@ -6,12 +6,13 @@
         "module": "module.vico",
         "method": "checkvico",
         "lib":"requests,json",
+        "needlogger":"False",
         "param": {
             "date_from":"2026-08-08",
             "date_to":"2026-08-22"
         },
         "notify": "retval@lambda x: x if x == \"KO\" else False",
-        "notifymessage": "Il servizio checkvico {retval}",
+        "notifymessage": "Il servizio checkvico - {retval}",
         "notifymethod":"telegram",
         "storedb": true
     }

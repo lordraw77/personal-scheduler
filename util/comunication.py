@@ -12,9 +12,7 @@ def checkAllowSendTelegram(CONFIG):
     return bool(CSENDTELEGRAM)
 
 def sendtelegram(CONFIG,text):
-    print("1")
     if checkAllowSendTelegram(CONFIG) == True:
-        print("2")
         try:
             PS_BOTKEY = CONFIG.BOTKEY
         except KeyError:

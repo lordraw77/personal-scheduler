@@ -10,6 +10,14 @@ def load_env_parameter(envparma, env : dict,CONFIG: dict):
     except:
         pass    
     return  CONFIG.copy()
+
+
+def mng_library(libs):
+    if libs:
+        for lib in libs.split(","):
+            install_and_import(lib)
+            
+            
 def calcolateformatted_timestamp(CONFIG):
     from datetime import datetime
     import pytz

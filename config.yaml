@@ -5,3 +5,4 @@ cansendtelegram: !ENV ${PS_SENDTELEGRAM:True}
 botkey: !ENV ${PS_BOTKEY}
 chatid: !ENV ${PS_CHATID}
 timezone: !ENV ${PS_TIMEZONE:Europe/rome}
+db_path: !ENV ${PS_DBPATH:personal.db}

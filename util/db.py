@@ -3,6 +3,15 @@ import sqlite3
 import logging
 logger = logging.getLogger()
 
+def create_sqlite_database(db_path):
+    try:
+        conn = sqlite3.connect(db_path)
+        print(f"Database SQLite '{db_path}' creato/connesso con successo.")
+        return conn
+    except sqlite3.Error as e:
+        print(f"Errore durante la creazione del database: {e}")
+        return None
+
 def check_sqlite_db_exists(db_path):
     file_exists = os.path.isfile(db_path)    
     if not file_exists:

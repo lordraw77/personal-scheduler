@@ -48,24 +48,17 @@ logger.info("starting personal scheduler")
 logger.info("config loaded")
 logger.info(CONFIG.conf)
 
-db_path = "ps.db"
-# exists, is_valid = db.check_sqlite_db_exists(db_path)
+db_path = CONFIG.DB_PATH
+db.create_sqlite_database(db_path)
+exists, is_valid = db.check_sqlite_db_exists(db_path)
 
-# if exists and is_valid:
-#     logger.info(f"'{db_path}' exists and is a valid SQLite database.")
-# elif exists and not is_valid:
-#     logger.error(f"'{db_path}' exists but is not a valid SQLite database.")
-# else:
-#     logger.error(f"'{db_path}' does not exist.")
-
-# table_cronconf = "cronconf"
-
-# if db.check_table_exists(db_path, table_cronconf):
-#     logger.info(f" the table '{table_cronconf}'  exists ")
-# else:
-#     logger.error(f"the table '{table_cronconf}' don't exists")
-#     db.create_cronconf_table(db_path)
-    
+if exists and is_valid:
+    logger.info(f"'{db_path}' exists and is a valid SQLite database.")
+elif exists and not is_valid:
+    logger.error(f"'{db_path}' exists but is not a valid SQLite database.")
+else:
+    logger.error(f"'{db_path}' does not exist.")
+ 
 crudconf = CronConfCrud.CronConf(db_path)
 crudprefdata= PerfdataCrud.Perfdata(db_path)
         
@@ -103,7 +96,7 @@ def add_job_if_applicable(job, scheduler):
         scheduler.add_job(lambda: execute_job(job), CronTrigger.from_crontab(job['cron_expression'], timezone=pytz.timezone(CONFIG.TIMEZONE)), id=job_id)
         message = "added job with id: " + str(job_id) + " "+ job['cron_expression'] + "  " + common.crondecode(job['cron_expression'])
         crudconf.create_job(job_id, job['cron_expression'], common.crondecode(job['cron_expression']), job)
-        #print(message)
+        
         logger.info(message)
 
 def update_job_if_applicable(job, scheduler):
@@ -128,12 +121,12 @@ def update_job_if_applicable(job, scheduler):
         scheduler.add_job(lambda: execute_job(job), CronTrigger.from_crontab(job['cron_expression'], timezone=pytz.timezone(CONFIG.TIMEZONE)), id=job_id)
         message = "updated job with id: " + str(job_id) + " "+ job['cron_expression'] + "  " + common.crondecode(job['cron_expression'])
         crudconf.upsert_job(job_id, job['cron_expression'], common.crondecode(job['cron_expression']), job)
-        #print(message)
+        
         logger.info(message)
  
 def execute_job(job):
     message = f"{datetime.now()} executing job with id:  {str(job['id'])} {job['module']}  {job['method']}"
-    #print(message)
+    
     logger.info(message)
     methodtoexecute = get_method(job['module'],job['method'])
     paramd = {}
@@ -142,45 +135,59 @@ def execute_job(job):
     notifymessage =  common.check_parma_and_load(job,'notifymessage')
     notifymethod =  common.check_parma_and_load(job,'notifymethod',"telegram")
     storedb = common.check_parma_and_load(job,"storedb")
-    paramd.update( CONFIG.conf)
+    libs = common.check_parma_and_load(job,"lib")
+    needlogger=common.check_parma_and_load(job,"needlogger",False)
+   
+    common.mng_library(libs)
     retval =""
-    if paramd:
-        retval= methodtoexecute(paramd,logger)   
+    if paramd and  needlogger.lower() == "true":
+        paramd.update(CONFIG.conf)
+        retval= methodtoexecute(paramd,logger)  
+        message= f"executed {job['id']} {job['module']} {job['method']} the result are {retval}"
+        logger.info(message)
+    elif paramd and  needlogger.lower() == "false":
+        paramd.update(CONFIG.conf)
+        retval= methodtoexecute(paramd)  
         message= f"executed {job['id']} {job['module']} {job['method']} the result are {retval}"
         logger.info(message)
     else:
-        methodtoexecute(datetime.now())  
+        retval= methodtoexecute()  
+        message= f"executed {job['id']} {job['module']} {job['method']} the result are {retval}"
+        logger.info(message)
     if retval != "":  
         if notifymethod:
             logger.info(notifymethod)
             for _notifymet in notifymethod.split(","):
                 logger.debug(_notifymet)
                 if _notifymet.lower() == "telegram":
-                    if notify and notifymessage:
-                        globals()['retval']=retval
-                        globals().update(paramd)
-                        if bool(common.check_for_notify(notify)):
-                            mes = common.effify(notifymessage,globals())
-                            sendtelegram(CONFIG,mes)
+                    mng_telegram_notify(paramd, notify, notifymessage, retval)
                             #notifyservice.sendtelegram(mes,logger,config,job['id'],notifyforced)
-                elif _notifymet.lower() =="mail":   
-                    globals()['retval']=retval
-                    globals().update(paramd)
-                    if bool(common.check_for_notify(notify)):
-                        mes = common.effify(notifymessage)
-                        subject = f"output {job['id']}"
-                        # if notifysubject:
-                        #     subject =notifysubject 
-                        #notifyservice.sendmail(mes,subject,logger,config,job['id'],notifyforced)
+                # elif _notifymet.lower() =="mail":   
+                #     globals()['retval']=retval
+                #     globals().update(paramd)
+                #     if bool(common.check_for_notify(notify)):
+                #         mes = common.effify(notifymessage)
+                #         subject = f"output {job['id']}"
+                #         if notifysubject:
+                #             subject =notifysubject 
+                #         #notifyservice.sendmail(mes,subject,logger,config,job['id'],notifyforced)
         if bool(storedb) == True:
-            #edb.insertperfdata(config,logger,job['id'],retval)
             crudprefdata.create_perfdata(job['id'],retval,CONFIG)
-         
 
     if retval:
         logger.info(f"job {job['id']} executed retval={retval}")
     else:
         logger.info(f"job {job['id']} executed {datetime.now()}")
+
+
+
+def mng_telegram_notify(paramd, notify, notifymessage, retval):
+    if notify and notifymessage:
+        globals()['retval']=retval
+        globals().update(paramd)
+        if bool(common.check_for_notify(notify)):
+            mes = common.effify(notifymessage,globals())
+            sendtelegram(CONFIG,mes)
 
 
 #notifyservice.sendtelegram(f"start openmonitoring with {json.dumps(config)}",logger,config,forced=True)
@@ -195,19 +202,7 @@ job_defaults = {
 }
 sendtelegram(CONFIG,"start")
 
-#scheduler = BackgroundScheduler(timezone=timezone("Europe/Rome"))
 scheduler = background.BlockingScheduler(job_defaults=job_defaults,timezone=pytz.timezone(CONFIG.TIMEZONE))
-# scheduler.configure( job_defaults=job_defaults)
 
 scheduler.add_job(lambda: schedule_jobs(scheduler), 'interval', seconds=5, next_run_time=datetime.now(), id='scheduler-job-id')
 scheduler.start()
-
-
-
-
-
-
-
-
-
-common.sendtelegram(CONFIG,"start")

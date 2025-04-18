@@ -21,6 +21,7 @@ class Config:
     _botkey="botkey"
     _chatid="chatid"
     _timezone="timezone"
+    _db_path="db_path"
     LOGFILEPATH=""
     LOGBACKUPSIZE=""
     LOGLEVEL="" 
@@ -28,6 +29,7 @@ class Config:
     BOTKEY=""
     CHATID=""
     TIMEZONE=""
+    DB_PATH=""
     
     def _getparam(self,pramname):
         try:
@@ -54,6 +56,7 @@ class Config:
             self.BOTKEY = self._getparam(self._botkey)
             self.CHATID = self._getparam(self._chatid)
             self.TIMEZONE = self._getparam(self._timezone)
+            self.DB_PATH = self._getparam(self._db_path)
             
             #self.env_variables = dotenv_values(".env")
             #self.conf.update(dotenv_values(".env"))
