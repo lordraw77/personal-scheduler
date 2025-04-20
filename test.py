@@ -32,7 +32,8 @@ config = {
     "responseType":"json",
     "responseVariable":"retval",
     "ifmethod":"lambda x: len(retval['data']['search_results']['1726']['accommodations']) if len(retval['data']['search_results'])> 0 else 0",
-    "returnvalue": "retval['data']['search_results']['1726']['accommodations']"
+    "returnvalue": "retval['data']['search_results']['1726']['accommodations']",
+    "notifymes":"camere disponibili {len(retval['data']['search_results']['1726']['accommodations'])}  {date_from} - {date_to}"
     }
 
 print(config)
