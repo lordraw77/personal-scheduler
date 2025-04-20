@@ -4,14 +4,12 @@ from string import Formatter
 
 # Funzione per formattare la stringa di notifica con valori dinamici
 def format_message(template, **kwargs):
-    """Formatta una stringa template con i valori forniti, gestendo chiavi mancanti."""
     class SafeFormatter(Formatter):
         def get_value(self, key, args, kwargs):
             try:
                 return super().get_value(key, args, kwargs)
             except (KeyError, IndexError):
                 return '{' + key + '}'
-
     formatter = SafeFormatter()
     return formatter.format(template, **kwargs)
 
