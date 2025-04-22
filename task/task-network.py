@@ -75,8 +75,14 @@ def httpspost(self,param):
         host = common.effify(gdict['host'],gdict)
         port=  int(gdict['port'])
         get=   common.effify(gdict['get'],gdict)
-        payload =  json.loads(common.effify(gdict['payload'],gdict).replace("None", "null"))[0]
-        headers= json.loads(param['headers'].replace("'", "\""))[0]
+        payload =  json.loads(common.effify(gdict['payload'],gdict).replace("None", "null"))
+        if isinstance(payload, list):
+            payload= payload[0]
+            
+        headers= json.loads(param['headers'].replace("'", "\""))
+        if isinstance(headers, list):
+            headers=headers[0]
+            
         if str(port) == "443":
             url = f"https://{host}{get}"
         else:

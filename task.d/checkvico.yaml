@@ -6,8 +6,8 @@
       port: 443
       get: "/BOL/search"
       payload: '[{
-        "date_from":  "2025-04-23",
-        "date_to": "2025-04-25" ,
+        "date_from":  "2025-05-03",
+        "date_to": "2025-05-06" ,
         "rooms": [
             {
             "num_adults": 2,

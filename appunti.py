@@ -1,4 +1,11 @@
 
+from jsonpath_ng import parse
+
+json_path_expr = parse('$.persona.dettagli.interessi[*]')
+matches = [match.value for match in json_path_expr.find(data)]
+print(f"Interessi: {matches}")  # Stampa tutti gli interessi
+
+
 crud = PerfdataCrud.Perfdata(db_path)
 
 # Esempio di creazione di alcuni record
