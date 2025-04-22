@@ -1,12 +1,11 @@
 [
     {
-        "id": "checkvico",
+        "id": "taskcheckvico",
         "cron_expression": "*/1 * * * *",
         "version": 0,
-        "enable": 0,
-        "jobtype": "module",
-        "module": "module.vico",
-        "method": "checkvico",
+        "enable":1,
+        "jobtype": "task",
+        "task": "checkvico",
         "lib":"requests,json",
         "needlogger":"False",
         "param": {

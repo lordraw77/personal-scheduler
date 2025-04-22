@@ -1,7 +1,12 @@
+from string import Formatter
 from cron_descriptor import Options, CasingTypeEnum, DescriptionTypeEnum, ExpressionDescriptor
 from datetime import datetime, time
 import requests
 import json
+
+
+logstart= lambda x: print(f"start {x:.<30}...")
+logend  = lambda x: print(f"end   {x:.<30}...") 
 
 def load_env_parameter(envparma, env : dict,CONFIG: dict):
     CONFIG[envparma] = "na"
@@ -10,6 +15,16 @@ def load_env_parameter(envparma, env : dict,CONFIG: dict):
     except:
         pass    
     return  CONFIG.copy()
+
+def format_message(template, **kwargs):
+    class SafeFormatter(Formatter):
+        def get_value(self, key, args, kwargs):
+            try:
+                return super().get_value(key, args, kwargs)
+            except (KeyError, IndexError):
+                return '{' + key + '}'
+    formatter = SafeFormatter()
+    return formatter.format(template, **kwargs)
 
 
 def mng_library(libs):
@@ -47,7 +62,12 @@ def is_time_between(begin_time, end_time, check_time=None):
 def effify(non_f_str: str,gdict):
     globals().update(gdict)
     if "{" in non_f_str:
-        return eval(f'f"""{non_f_str}"""')
+        msg=non_f_str
+        try:
+            msg= eval(f'f"""{non_f_str}"""')
+        except:
+            pass
+        return msg
     else:
         return non_f_str
     
@@ -85,3 +105,29 @@ def install_and_import(package):
         reload(site)
     finally:
         globals()[package] = importlib.import_module(package)
+
+def checkandloadparam(self,modulename,paramneed,param ):
+    ret=True
+    for par in paramneed:
+        if par in param:
+            self.gdict[par]= param.get(par)
+        else:
+            print(f'the param {par} need for {modulename}, nedded parameter are {paramneed}')
+            ret=False
+            break
+    return ret
+
+
+def checkparam(paramname, param):
+    ret=False
+    if paramname in param:
+        ret=True
+    return ret
+
+def silent_execution(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except:
+            pass
+    return wrapper

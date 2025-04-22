@@ -1,5 +1,13 @@
+import inspect
 import json
 import requests
+import util.common as common
+import util.config as config
+import util.comunication as com
+
+CONFIG2 = config.Config("./config.yaml")
+myself = lambda: inspect.stack()[1][3]
+
 paramd= {}
 # paramd["date_from"] ="2026-08-08"
 # paramd["date_to"]="2026-08-22" 
@@ -32,14 +40,18 @@ config = {
     "responseType":"json",
     "responseVariable":"retval",
     "ifmethod":"lambda x: len(retval['data']['search_results']['1726']['accommodations']) if len(retval['data']['search_results'])> 0 else 0",
-    "returnvalue": "retval['data']['search_results']['1726']['accommodations']",
-    "notifymes":"camere disponibili {len(retval['data']['search_results']['1726']['accommodations'])}  {date_from} - {date_to}"
+    "returnvalue": "len(retval['data']['search_results']['1726']['accommodations'])",
+    "returnvariable": "returnval",
+    "notifymessage":"camere disponibili {returnval} {paramd[\"date_from\"]} - {paramd[\"date_to\"]}",
+    "notifymethod":"telegram"
     }
 
 print(config)
 
 def execute_api_request(config, paramd):
     # Estrai i parametri dalla configurazione
+    common.logstart(myself())
+    
     url = config["url"]
     method = config["method"]
     headers = config["headers"]
@@ -73,13 +85,21 @@ def execute_api_request(config, paramd):
         if_result = eval(if_code)
         print(f"Risultato della condizione ifmethod: {if_result}")
     except Exception as e:
-        print(f"Errore durante la valutazione della condizione: {e}")
+        print(f"Errore durante la valutazione della condizione: {e}") 
     
     # Estrai e restituisci il valore specificato in returnvalue
     if if_result > 0:
         try:
             # Valuta returnvalue nel contesto corrente dove retval è definito
-            return eval(config["returnvalue"])
+            locals()[config['returnvariable']]= eval(config["returnvalue"])
+            globals().update(locals())
+            
+            mess = common.effify(config["notifymessage"], globals())
+            print(f"Messaggio di notifica: {mess}")
+            com.sendtelegram(CONFIG2,mess)
+            print(locals()[config['returnvariable']])
+            common.logend(myself())
+            return locals()[config['returnvariable']]
         except Exception as e:
             print(f"Errore durante l'estrazione del risultato: {e}")
             return []
@@ -102,3 +122,5 @@ if __name__ == "__main__":
                 print(f"Disponibilità: {accommodation.get('availability', 'N/A')}")
     except Exception as e:
         print(f"Errore durante l'esecuzione della richiesta: {e}")
+    
+    

@@ -1,5 +1,6 @@
 from datetime import datetime
-import pytz 
+import pytz
+import yaml 
 from util.comunication import sendtelegram
 import importlib
 import json
@@ -20,7 +21,10 @@ from dotenv import load_dotenv
 scheduled_jobs_map = {}
 
 load_dotenv()  
-
+cwd = os.getcwd()
+modulepath = os.path.join(cwd,"task")
+if os.path.exists(modulepath):
+    sys.path.append(modulepath)
 CONFIG =  config.Config("./config.yaml")        
 print(CONFIG.conf)
 logger = logging.getLogger()
@@ -67,13 +71,29 @@ def get_method(module,method):
     mymethod = getattr(importlib.import_module(module), method)
     return mymethod
 
+
 def schedule_jobs(scheduler):
     jobs = retrieve_jobs_to_schedule()
     for job in jobs: 
-        add_job_if_applicable(job, scheduler)
-        update_job_if_applicable(job, scheduler)
+        print(job['id'])
+        enable_job=int(job['enable'])
+        if enable_job == 0: 
+            remove_job_scheduler(scheduler, job)
+            try:
+                crudconf.delete_job(job["id"])
+            except:
+                pass
+        else:        
+            add_job_if_applicable(job, scheduler)
+            update_job_if_applicable(job, scheduler)
 
-    #logger.info(f"{datetime.now()} refreshed scheduled jobs")
+@common.silent_execution
+def remove_job_list(jobs, job):
+    jobs.remove(job)
+            
+@common.silent_execution
+def remove_job_scheduler(scheduler, job):
+    scheduler.remove_job(job["id"])
 
 def retrieve_jobs_to_schedule():
     cwd = os.getcwd()
@@ -82,10 +102,10 @@ def retrieve_jobs_to_schedule():
     jobfolderd = os.path.join(cwd,jobfolder)
     for file in os.listdir(jobfolderd):
         if file.endswith(".json"):
-            logger.debug(f"load job {file}")
+            logger.info(f"load job {file}")
             with open(os.path.join(jobfolderd, file),'r') as file:
                 jobs.extend(json.load(file))
-
+                print(len(jobs))
     return jobs
 
 
@@ -98,6 +118,8 @@ def add_job_if_applicable(job, scheduler):
         crudconf.create_job(job_id, job['cron_expression'], common.crondecode(job['cron_expression']), job)
         
         logger.info(message)
+
+            
 
 def update_job_if_applicable(job, scheduler):
     job_id = str(job['id'])
@@ -125,9 +147,60 @@ def update_job_if_applicable(job, scheduler):
         logger.info(message)
  
 def execute_job(job):
-    message = f"{datetime.now()} executing job with id:  {str(job['id'])} {job['module']}  {job['method']}"
+    jobtype="None"
+    try:
+        jobtype=job["jobtype"]
+    except:
+        pass
+    if "module" in jobtype.lower():
+        execute_job_module(job)
+    elif "task" in jobtype.lower():
+        execute_job_task(job)
+        
+
+def execute_job_task(job):
+    gdict={}
+    gdict.update(globals())
+    gdict.update(locals())
     
+    message = f"{datetime.now()} executing job with id:  {str(job['id'])} {job['task']}"
     logger.info(message)
+    tasksfile = f"task.d/{job['task']}.yaml"
+    with open(tasksfile) as file:
+        conf = yaml.load(file, Loader=yaml.FullLoader)
+    
+    tasks = conf[0]['tasks']
+    sizetask = len(tasks)
+    currtask = 1 
+    for task in tasks:
+        for key in task.keys():
+            if "name" != key:
+                print("\n")
+                print(f"exec task \"{name}\"  task {currtask} of {sizetask}")
+                
+                print(f"\t{key} {task.get(key)}") 
+                if "." in key:
+                    m = __import__(key.split('.')[0])
+                    mfunc = getattr(m,"setgdict")
+                    mfunc(m,gdict)
+                    func = getattr(m,key.split('.')[1])
+                    func(m,task.get(key))
+                    
+                else:
+                    func = globals()[key]
+                    func(task.get(key))
+                currtask = currtask +1 
+            else:
+                name = common.effify(task.get(key),gdict)
+
+
+    pass
+
+def execute_job_module(job):
+    message = f"{datetime.now()} executing job with id:  {str(job['id'])} {job['module']}  {job['method']}"
+        
+    logger.info(message)
+        
     methodtoexecute = get_method(job['module'],job['method'])
     paramd = {}
     paramd = common.check_parma_and_load(job,'param')
@@ -137,7 +210,7 @@ def execute_job(job):
     storedb = common.check_parma_and_load(job,"storedb")
     libs = common.check_parma_and_load(job,"lib")
     needlogger=common.check_parma_and_load(job,"needlogger",False)
-   
+    
     common.mng_library(libs)
     retval =""
     if paramd and  needlogger.lower() == "true":
@@ -161,16 +234,16 @@ def execute_job(job):
                 logger.debug(_notifymet)
                 if _notifymet.lower() == "telegram":
                     mng_telegram_notify(paramd, notify, notifymessage, retval)
-                            #notifyservice.sendtelegram(mes,logger,config,job['id'],notifyforced)
-                # elif _notifymet.lower() =="mail":   
-                #     globals()['retval']=retval
-                #     globals().update(paramd)
-                #     if bool(common.check_for_notify(notify)):
-                #         mes = common.effify(notifymessage)
-                #         subject = f"output {job['id']}"
-                #         if notifysubject:
-                #             subject =notifysubject 
-                #         #notifyservice.sendmail(mes,subject,logger,config,job['id'],notifyforced)
+                                #notifyservice.sendtelegram(mes,logger,config,job['id'],notifyforced)
+                    # elif _notifymet.lower() =="mail":   
+                    #     globals()['retval']=retval
+                    #     globals().update(paramd)
+                    #     if bool(common.check_for_notify(notify)):
+                    #         mes = common.effify(notifymessage)
+                    #         subject = f"output {job['id']}"
+                    #         if notifysubject:
+                    #             subject =notifysubject 
+                    #         #notifyservice.sendmail(mes,subject,logger,config,job['id'],notifyforced)
         if bool(storedb) == True:
             crudprefdata.create_perfdata(job['id'],retval,CONFIG)
 
@@ -200,9 +273,9 @@ job_defaults = {
     'coalesce': False,
     'max_instances': 10
 }
-sendtelegram(CONFIG,"start")
+#sendtelegram(CONFIG,"start")
 
 scheduler = background.BlockingScheduler(job_defaults=job_defaults,timezone=pytz.timezone(CONFIG.TIMEZONE))
 
-scheduler.add_job(lambda: schedule_jobs(scheduler), 'interval', seconds=5, next_run_time=datetime.now(), id='scheduler-job-id')
+scheduler.add_job(lambda: schedule_jobs(scheduler), 'interval', seconds=60, next_run_time=datetime.now(), id='scheduler-job-id')
 scheduler.start()

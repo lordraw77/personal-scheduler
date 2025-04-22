@@ -39,7 +39,6 @@ def checkvico(paramd):
     
     aDict = json.loads(response.text)
     out = ""
-   
     if len(aDict['data']['search_results'])> 0:
         acc = aDict['data']['search_results']['1726']['accommodations']
         lacc = len(acc)
