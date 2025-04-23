@@ -35,3 +35,10 @@
       xpath: length(data.search_results.*.accommodations[].[accommodation_id])
       printout: True
       saveonvar: outputDataJson
+  - name: sendtelegram
+    task-notify.sendtelegramnotify:
+        tokenid: botXXX:YYY
+        chatid: 
+            - '00000000'
+        message: "stanze {outputDataJson} disponibili dal 2025-05-03 2025-05-06"
+        printresponse: True #optional
