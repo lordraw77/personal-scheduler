@@ -364,7 +364,7 @@ job_defaults = {
     'max_instances': 10
 }
 
-scheduler = background.BlockingScheduler(job_defaults=job_defaults, jobstores=jobstores,timezone=pytz.timezone(CONFIG.TIMEZONE))
+scheduler = background.BlockingScheduler(job_defaults=job_defaults,timezone=pytz.timezone(CONFIG.TIMEZONE))
 
 # Add a job to check for scheduler updates every 60 seconds
 scheduler.add_job(lambda: schedule_jobs(scheduler), 'interval', seconds=60, next_run_time=datetime.now(), id='scheduler-job-id')
