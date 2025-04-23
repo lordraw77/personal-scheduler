@@ -19,6 +19,7 @@ import sys
 import os
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
+
 from dotenv import load_dotenv
 
 
@@ -101,7 +102,7 @@ def schedule_jobs(scheduler):
     """
     jobs = retrieve_jobs_to_schedule()
     for job in jobs: 
-        print(job['id'])
+        logger.info(job['id'])
         enable_job = int(job['enable'])
         if enable_job == 0: 
             # Remove disabled jobs
@@ -153,7 +154,7 @@ def retrieve_jobs_to_schedule():
             logger.info(f"load job {file}")
             with open(os.path.join(jobfolderd, file), 'r') as file:
                 jobs.extend(json.load(file))
-                print(len(jobs))
+                logger.info(len(jobs))
     return jobs
 
 
@@ -187,6 +188,7 @@ def update_job_if_applicable(job, scheduler):
         job: Job configuration
         scheduler: APScheduler instance
     """
+
     job_id = str(job['id'])
     if (job_id not in scheduled_jobs_map):
         return
@@ -255,10 +257,10 @@ def execute_job_task(job):
     for task in tasks:
         for key in task.keys():
             if "name" != key:
-                print("\n")
-                print(f"exec task \"{name}\"  task {currtask} of {sizetask}")
+                logger.info("\n")
+                logger.info(f"exec task \"{name}\"  task {currtask} of {sizetask}")
                 
-                print(f"\t{key} {task.get(key)}") 
+                logger.info(f"\t{key} {task.get(key)}") 
                 if "." in key:
                     # For module.function format
                     m = __import__(key.split('.')[0])
@@ -362,8 +364,8 @@ job_defaults = {
     'max_instances': 10
 }
 
-scheduler = background.BlockingScheduler(job_defaults=job_defaults, timezone=pytz.timezone(CONFIG.TIMEZONE))
+scheduler = background.BlockingScheduler(job_defaults=job_defaults, jobstores=jobstores,timezone=pytz.timezone(CONFIG.TIMEZONE))
 
 # Add a job to check for scheduler updates every 60 seconds
 scheduler.add_job(lambda: schedule_jobs(scheduler), 'interval', seconds=60, next_run_time=datetime.now(), id='scheduler-job-id')
-scheduler.start()
+scheduler.start() 
