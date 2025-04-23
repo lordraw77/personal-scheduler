@@ -1,0 +1,681 @@
+{
+    "data": {
+        "search_input": {
+            "date_from": "2025-05-03",
+            "date_to": "2025-05-05",
+            "date_checkout": "2025-05-06",
+            "number_of_nights": 3,
+            "price_list_id": 0,
+            "language": "it",
+            "accommodations": [
+                {
+                    "NUM_ADULTS": 2,
+                    "BASE_BEDS": null,
+                    "NUM_CHILDREN": 0,
+                    "CHILDREN_AGES": [],
+                    "TOTAL_GUESTS": 2
+                }
+            ],
+            "currency": "EUR",
+            "metasearch_id": null,
+            "channel_conversion": null,
+            "trv_reference": null,
+            "coupon_code": null
+        },
+        "search_results": {
+            "1726": {
+                "property_id": 1726,
+                "property_name": "Agriturismo - Bed and Breakfast La Valle di Vico",
+                "language": "it",
+                "treatments_used": [
+                    {
+                        "treatment_name": "Solo Pernottamento",
+                        "treatment_id": 1
+                    },
+                    {
+                        "treatment_name": "Camera e Colazione",
+                        "treatment_id": 2
+                    }
+                ],
+                "accommodations": [
+                    {
+                        "accommodation_id": 5545,
+                        "accommodation_name": "Camera Quadrupla",
+                        "accommodation_mq": null,
+                        "unique_id": "9e5cd2",
+                        "accommodation_description": "1 camera matrimoniale,  un divano letto da 2 posti, bagno e patio esterno.\nServizi: riscaldamento autonomo, Tv satellitare in ogni stanza, connessione wi-fi gratuita.\ncamera per un massimo di 5 persone.",
+                        "media": [
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/3q3VNrQrJn7TIsIPyb9o3rD0SbOb7TD0LrblwXIJ.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/3q3VNrQrJn7TIsIPyb9o3rD0SbOb7TD0LrblwXIJ.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/3q3VNrQrJn7TIsIPyb9o3rD0SbOb7TD0LrblwXIJ.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/3q3VNrQrJn7TIsIPyb9o3rD0SbOb7TD0LrblwXIJ.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/Fx3tAGAjMs2895pMmLeQ7pg7LSvOgyxwyVWvBUDA.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/Fx3tAGAjMs2895pMmLeQ7pg7LSvOgyxwyVWvBUDA.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/Fx3tAGAjMs2895pMmLeQ7pg7LSvOgyxwyVWvBUDA.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/Fx3tAGAjMs2895pMmLeQ7pg7LSvOgyxwyVWvBUDA.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/mKMTTb7qHftHVgOp7lStArZT3IB1zLfKACHPIv93.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/mKMTTb7qHftHVgOp7lStArZT3IB1zLfKACHPIv93.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/mKMTTb7qHftHVgOp7lStArZT3IB1zLfKACHPIv93.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/mKMTTb7qHftHVgOp7lStArZT3IB1zLfKACHPIv93.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/pcs5Y3RdPAYM33Wk0EQ7Kq0wnuEAfRk5NdVGWZi7.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/pcs5Y3RdPAYM33Wk0EQ7Kq0wnuEAfRk5NdVGWZi7.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/pcs5Y3RdPAYM33Wk0EQ7Kq0wnuEAfRk5NdVGWZi7.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/pcs5Y3RdPAYM33Wk0EQ7Kq0wnuEAfRk5NdVGWZi7.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/nZcH4WOKg3fh1Gh8dDdkiDPwIKSD0z5gKh2FOFtg.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/nZcH4WOKg3fh1Gh8dDdkiDPwIKSD0z5gKh2FOFtg.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/nZcH4WOKg3fh1Gh8dDdkiDPwIKSD0z5gKh2FOFtg.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/nZcH4WOKg3fh1Gh8dDdkiDPwIKSD0z5gKh2FOFtg.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/j6qHPCFc8ttADxzetoHdkAZpBRSSbr6rQFcjEPLo.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/j6qHPCFc8ttADxzetoHdkAZpBRSSbr6rQFcjEPLo.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/j6qHPCFc8ttADxzetoHdkAZpBRSSbr6rQFcjEPLo.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/j6qHPCFc8ttADxzetoHdkAZpBRSSbr6rQFcjEPLo.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/u1BpWjp63YIVUPpc8xCLC8p5IiOjnApK9IP6CK03.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/u1BpWjp63YIVUPpc8xCLC8p5IiOjnApK9IP6CK03.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/u1BpWjp63YIVUPpc8xCLC8p5IiOjnApK9IP6CK03.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/u1BpWjp63YIVUPpc8xCLC8p5IiOjnApK9IP6CK03.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/HjApIFuvhUrsFXnspMIlwvQ96uY502on7XXJcdGS.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/HjApIFuvhUrsFXnspMIlwvQ96uY502on7XXJcdGS.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/HjApIFuvhUrsFXnspMIlwvQ96uY502on7XXJcdGS.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/HjApIFuvhUrsFXnspMIlwvQ96uY502on7XXJcdGS.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/kTbUSxJRz8z43xInakdIPKZmyKWHFueBTm8PXp6l.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/kTbUSxJRz8z43xInakdIPKZmyKWHFueBTm8PXp6l.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/kTbUSxJRz8z43xInakdIPKZmyKWHFueBTm8PXp6l.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/kTbUSxJRz8z43xInakdIPKZmyKWHFueBTm8PXp6l.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/o9lMXH4S0jaz1Cs3NKrqLgwaS9pf85IqzmedHPwF.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/o9lMXH4S0jaz1Cs3NKrqLgwaS9pf85IqzmedHPwF.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/o9lMXH4S0jaz1Cs3NKrqLgwaS9pf85IqzmedHPwF.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/o9lMXH4S0jaz1Cs3NKrqLgwaS9pf85IqzmedHPwF.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/xwwhHJqfOGAYXkqDpfUXv2HY63DAv8PYlI4FpcxV.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/xwwhHJqfOGAYXkqDpfUXv2HY63DAv8PYlI4FpcxV.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/xwwhHJqfOGAYXkqDpfUXv2HY63DAv8PYlI4FpcxV.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/xwwhHJqfOGAYXkqDpfUXv2HY63DAv8PYlI4FpcxV.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/2F5heFvaH0AO4tNaWknhAzQDFp04vNud2Kj0kMkW.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/small/2F5heFvaH0AO4tNaWknhAzQDFp04vNud2Kj0kMkW.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/medium/2F5heFvaH0AO4tNaWknhAzQDFp04vNud2Kj0kMkW.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5545/gallery/large/2F5heFvaH0AO4tNaWknhAzQDFp04vNud2Kj0kMkW.jpeg"
+                                }
+                            }
+                        ],
+                        "facilities": [],
+                        "last_room": false,
+                        "quantity": 5,
+                        "accommodation_avail_max": 1,
+                        "min_adults": 1,
+                        "max_adults": 5,
+                        "max_children": 4,
+                        "total_beds": 5,
+                        "base_beds": null,
+                        "guests": {
+                            "NUM_ADULTS": 2,
+                            "BASE_BEDS": null,
+                            "NUM_CHILDREN": 0,
+                            "CHILDREN_AGES": [],
+                            "TOTAL_GUESTS": 2
+                        },
+                        "guest_configuration_id": 0,
+                        "number_of_guests": 2,
+                        "beds_type_choice": true,
+                        "beds_type": [
+                            {
+                                "id": 4,
+                                "name": "Letti singoli"
+                            },
+                            {
+                                "id": 5,
+                                "name": "Letto matrimoniale"
+                            }
+                        ],
+                        "rateplans": {
+                            "28616": {
+                                "rateplan_id": 7344,
+                                "rateplan_name": "Miglior tariffa garantita",
+                                "rateplan_description": "Approfitta dell'esclusiva promozione riservata ai clienti che prenotano dal nostro sito web",
+                                "rateplan_type": "plan",
+                                "rateplan_options": {
+                                    "id": 28168,
+                                    "rateplan_id": 7344,
+                                    "unlockable": 0,
+                                    "discount_value": null,
+                                    "discount_type": null,
+                                    "discount_to_treatments": 0,
+                                    "facebook_access": 0,
+                                    "facebook_like": 0,
+                                    "newsletter": 0,
+                                    "free_text": "",
+                                    "in_evidence": 0,
+                                    "in_evidence_from": null,
+                                    "in_evidence_to": null,
+                                    "show_in_xml": 0,
+                                    "status": 1
+                                },
+                                "ignore_restriction": false,
+                                "policies": {
+                                    "id": 3982,
+                                    "deposit": 0,
+                                    "free_cancellation": 1,
+                                    "addons_to_deposit": 0,
+                                    "pay_on_arrival": 1,
+                                    "pay_on_departure": 0,
+                                    "name": "Cancellazione gratuita 7 giorni",
+                                    "description": "<p>Puoi cancellare gratuitamente fino a\u00a0 7 giorni prima dell'arrivo.</p><p>Se cancelli nei\u00a0 7 giorni prima dell'arrivo ti verr\u00e0 addebitato il 100% del costo totale.</p><p>In caso di mancata presentazione ti verr\u00e0 addebitato l'intero importo del soggiorno.</p>",
+                                    "show_custom_text_policy": false,
+                                    "description_with_dates": "<p>Puoi cancellare gratuitamente fino alle 23:59 del 25/04/2025.</p><p>Se cancelli dopo le 23:59 del 25/04/2025 ti verr\u00e0 addebitato il 100% del costo totale.</p>",
+                                    "deposit_description": "."
+                                },
+                                "persuasive_sentences": [
+                                    {
+                                        "icon": "fas fa-star",
+                                        "label": "Cancellazione gratuita fino al 26/04/2025",
+                                        "icon_color": "#75da94",
+                                        "key": "free_cancellation_until",
+                                        "date_limit": "26/04/2025"
+                                    },
+                                    {
+                                        "icon": "fas fa-exclamation-circle",
+                                        "label": "Termini e condizioni di prenotazione",
+                                        "icon_color": "#adb5bd",
+                                        "key": "cancellation_term"
+                                    },
+                                    {
+                                        "icon": "fas fa-star",
+                                        "label": "Questa \u00e8 la tariffa pi\u00f9 conveniente",
+                                        "icon_color": "#75da94",
+                                        "key": "cheapest_rate"
+                                    }
+                                ],
+                                "price_list_id": 0,
+                                "accommodation_rateplan_id": 28616,
+                                "treatments": {
+                                    "1": {
+                                        "treatment_id": 1,
+                                        "treatment_name": "Solo Pernottamento",
+                                        "days": {
+                                            "2025-05-03": {
+                                                "price_without_treatments": "105.00",
+                                                "price_supplement_treatments": "0.00",
+                                                "total_price": "105.00",
+                                                "treatments_surplus": "0.00"
+                                            },
+                                            "2025-05-04": {
+                                                "price_without_treatments": "105.00",
+                                                "price_supplement_treatments": "0.00",
+                                                "total_price": "105.00",
+                                                "treatments_surplus": "0.00"
+                                            },
+                                            "2025-05-05": {
+                                                "price_without_treatments": "105.00",
+                                                "price_supplement_treatments": "0.00",
+                                                "total_price": "105.00",
+                                                "treatments_surplus": "0.00"
+                                            }
+                                        },
+                                        "totals": {
+                                            "total_price": "315.00",
+                                            "old_price": "315.00",
+                                            "discount_amount": "0.00",
+                                            "percentage": "0.00"
+                                        }
+                                    }
+                                },
+                                "price_comparator": [
+                                    {
+                                        "channel_name": "Booking",
+                                        "price": "365.40"
+                                    },
+                                    {
+                                        "channel_name": "Beddy",
+                                        "is_website": true,
+                                        "price": "315.00",
+                                        "total_guest": 2,
+                                        "date_from": "2025-05-03",
+                                        "date_to": "2025-05-06"
+                                    }
+                                ],
+                                "order": 1
+                            },
+                            "28631": {
+                                "rateplan_id": 7348,
+                                "rateplan_name": "Camera - colazione inclusa",
+                                "rateplan_description": "Approfitta dell'esclusiva promozione riservata ai clienti che prenotano dal nostro sito web",
+                                "rateplan_type": "plan",
+                                "rateplan_options": {
+                                    "id": 64757,
+                                    "rateplan_id": 7348,
+                                    "unlockable": 0,
+                                    "discount_value": null,
+                                    "discount_type": null,
+                                    "discount_to_treatments": 0,
+                                    "facebook_access": 0,
+                                    "facebook_like": 0,
+                                    "newsletter": 0,
+                                    "free_text": "",
+                                    "in_evidence": 0,
+                                    "in_evidence_from": null,
+                                    "in_evidence_to": null,
+                                    "show_in_xml": 0,
+                                    "status": 1
+                                },
+                                "ignore_restriction": false,
+                                "policies": {
+                                    "id": 3982,
+                                    "deposit": 0,
+                                    "free_cancellation": 1,
+                                    "addons_to_deposit": 0,
+                                    "pay_on_arrival": 1,
+                                    "pay_on_departure": 0,
+                                    "name": "Cancellazione gratuita 7 giorni",
+                                    "description": "<p>Puoi cancellare gratuitamente fino a\u00a0 7 giorni prima dell'arrivo.</p><p>Se cancelli nei\u00a0 7 giorni prima dell'arrivo ti verr\u00e0 addebitato il 100% del costo totale.</p><p>In caso di mancata presentazione ti verr\u00e0 addebitato l'intero importo del soggiorno.</p>",
+                                    "show_custom_text_policy": false,
+                                    "description_with_dates": "<p>Puoi cancellare gratuitamente fino alle 23:59 del 25/04/2025.</p><p>Se cancelli dopo le 23:59 del 25/04/2025 ti verr\u00e0 addebitato il 100% del costo totale.</p>",
+                                    "deposit_description": "."
+                                },
+                                "persuasive_sentences": [
+                                    {
+                                        "icon": "fas fa-star",
+                                        "label": "Cancellazione gratuita fino al 26/04/2025",
+                                        "icon_color": "#75da94",
+                                        "key": "free_cancellation_until",
+                                        "date_limit": "26/04/2025"
+                                    },
+                                    {
+                                        "icon": "fas fa-exclamation-circle",
+                                        "label": "Termini e condizioni di prenotazione",
+                                        "icon_color": "#adb5bd",
+                                        "key": "cancellation_term"
+                                    }
+                                ],
+                                "price_list_id": 0,
+                                "accommodation_rateplan_id": 28631,
+                                "treatments": {
+                                    "2": {
+                                        "treatment_id": 2,
+                                        "treatment_name": "Camera e Colazione",
+                                        "days": {
+                                            "2025-05-03": {
+                                                "price_without_treatments": "120.00",
+                                                "price_supplement_treatments": "0.00",
+                                                "total_price": "120.00",
+                                                "treatments_surplus": "0.00"
+                                            },
+                                            "2025-05-04": {
+                                                "price_without_treatments": "120.00",
+                                                "price_supplement_treatments": "0.00",
+                                                "total_price": "120.00",
+                                                "treatments_surplus": "0.00"
+                                            },
+                                            "2025-05-05": {
+                                                "price_without_treatments": "120.00",
+                                                "price_supplement_treatments": "0.00",
+                                                "total_price": "120.00",
+                                                "treatments_surplus": "0.00"
+                                            }
+                                        },
+                                        "totals": {
+                                            "total_price": "360.00",
+                                            "old_price": "360.00",
+                                            "discount_amount": "0.00",
+                                            "percentage": "0.00"
+                                        }
+                                    }
+                                },
+                                "order": 2
+                            }
+                        }
+                    },
+                    {
+                        "accommodation_id": 5551,
+                        "accommodation_name": "Appartamento 2 + 2 posti letto",
+                        "accommodation_mq": 45,
+                        "unique_id": "693347",
+                        "accommodation_description": "Bilocale composto da: Soggiorno con angolo cottura attrezzato e divano letto 2 posti letto, camera matrimoniale, bagno e patio esterno.\nServizi: riscaldamento autonomo, Tv satellitare in ogni stanza, connessione wi-fi gratuita.\nAppartamento/camera per un massimo di 5 persone (\u00e8 possibile aggiungere un quinto letto in camera).",
+                        "media": [
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/tL7XdZWhoyTLIX6R1NgTvheW1vYvdYPMVYh9h1ej.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/tL7XdZWhoyTLIX6R1NgTvheW1vYvdYPMVYh9h1ej.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/tL7XdZWhoyTLIX6R1NgTvheW1vYvdYPMVYh9h1ej.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/tL7XdZWhoyTLIX6R1NgTvheW1vYvdYPMVYh9h1ej.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/s8jjCmCuW6HsebmNuT2N4ANPSJPYMh5XNOj9bwMG.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/s8jjCmCuW6HsebmNuT2N4ANPSJPYMh5XNOj9bwMG.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/s8jjCmCuW6HsebmNuT2N4ANPSJPYMh5XNOj9bwMG.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/s8jjCmCuW6HsebmNuT2N4ANPSJPYMh5XNOj9bwMG.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/FZ3G5ccQGA6aFwYARdaYCumgExTJpsTm27Qe3G7e.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/FZ3G5ccQGA6aFwYARdaYCumgExTJpsTm27Qe3G7e.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/FZ3G5ccQGA6aFwYARdaYCumgExTJpsTm27Qe3G7e.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/FZ3G5ccQGA6aFwYARdaYCumgExTJpsTm27Qe3G7e.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/8pn7ZzASBiSdR9D4xaqZZVrrVV6JM6H3H4eUt2vM.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/8pn7ZzASBiSdR9D4xaqZZVrrVV6JM6H3H4eUt2vM.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/8pn7ZzASBiSdR9D4xaqZZVrrVV6JM6H3H4eUt2vM.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/8pn7ZzASBiSdR9D4xaqZZVrrVV6JM6H3H4eUt2vM.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/F82M2ioplOQmW5suV2Yv7hmccpDXLtGsNWvY916D.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/F82M2ioplOQmW5suV2Yv7hmccpDXLtGsNWvY916D.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/F82M2ioplOQmW5suV2Yv7hmccpDXLtGsNWvY916D.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/F82M2ioplOQmW5suV2Yv7hmccpDXLtGsNWvY916D.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/QNPD10MbzAkEcuVp7kkYOMlOHOrEGVeS8Tvexu1a.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/QNPD10MbzAkEcuVp7kkYOMlOHOrEGVeS8Tvexu1a.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/QNPD10MbzAkEcuVp7kkYOMlOHOrEGVeS8Tvexu1a.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/QNPD10MbzAkEcuVp7kkYOMlOHOrEGVeS8Tvexu1a.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/zstjAbWWwXseJpIi5oGJfpFrNukTWxMycYV6NmR2.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/zstjAbWWwXseJpIi5oGJfpFrNukTWxMycYV6NmR2.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/zstjAbWWwXseJpIi5oGJfpFrNukTWxMycYV6NmR2.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/zstjAbWWwXseJpIi5oGJfpFrNukTWxMycYV6NmR2.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/QjzAsrBIegAHs0MimePChFb3bAuqx1vm60g7QWpN.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/QjzAsrBIegAHs0MimePChFb3bAuqx1vm60g7QWpN.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/QjzAsrBIegAHs0MimePChFb3bAuqx1vm60g7QWpN.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/QjzAsrBIegAHs0MimePChFb3bAuqx1vm60g7QWpN.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/ksj8XTZdYADN4lqK3f7fbocUoyTO1B2pA7ZKiRyG.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/ksj8XTZdYADN4lqK3f7fbocUoyTO1B2pA7ZKiRyG.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/ksj8XTZdYADN4lqK3f7fbocUoyTO1B2pA7ZKiRyG.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/ksj8XTZdYADN4lqK3f7fbocUoyTO1B2pA7ZKiRyG.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/lr9IHSJ9BQwrDL3wnvHWyRw52aNuSktnuiviaBsl.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/lr9IHSJ9BQwrDL3wnvHWyRw52aNuSktnuiviaBsl.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/lr9IHSJ9BQwrDL3wnvHWyRw52aNuSktnuiviaBsl.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/lr9IHSJ9BQwrDL3wnvHWyRw52aNuSktnuiviaBsl.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/f5gR8L1m5CiSzkz0x5eGNDqO1sJgmMTavFz6JhTu.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/f5gR8L1m5CiSzkz0x5eGNDqO1sJgmMTavFz6JhTu.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/f5gR8L1m5CiSzkz0x5eGNDqO1sJgmMTavFz6JhTu.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/f5gR8L1m5CiSzkz0x5eGNDqO1sJgmMTavFz6JhTu.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/X7MlPzd1PLd1niAOB1ikfuFEpejF5mWm6IE8PMTA.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/X7MlPzd1PLd1niAOB1ikfuFEpejF5mWm6IE8PMTA.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/X7MlPzd1PLd1niAOB1ikfuFEpejF5mWm6IE8PMTA.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/X7MlPzd1PLd1niAOB1ikfuFEpejF5mWm6IE8PMTA.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/I1RnIfK61ba8QpsGID1RbYt3cCnvUIl96khqHUYW.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/I1RnIfK61ba8QpsGID1RbYt3cCnvUIl96khqHUYW.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/I1RnIfK61ba8QpsGID1RbYt3cCnvUIl96khqHUYW.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/I1RnIfK61ba8QpsGID1RbYt3cCnvUIl96khqHUYW.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/hJGMjjMiVL0Avb6jbbPs8hMHSe58YJKXmA0xQI7G.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/hJGMjjMiVL0Avb6jbbPs8hMHSe58YJKXmA0xQI7G.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/hJGMjjMiVL0Avb6jbbPs8hMHSe58YJKXmA0xQI7G.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/hJGMjjMiVL0Avb6jbbPs8hMHSe58YJKXmA0xQI7G.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/esYUrrbFep0FrpxHFEEqAgbUtaMgOtMnbI4KQZIy.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/esYUrrbFep0FrpxHFEEqAgbUtaMgOtMnbI4KQZIy.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/esYUrrbFep0FrpxHFEEqAgbUtaMgOtMnbI4KQZIy.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/esYUrrbFep0FrpxHFEEqAgbUtaMgOtMnbI4KQZIy.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/mHhQ59YJ0nUgfn7kyxWnIB1vkQIadwFEZn9YV0km.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/mHhQ59YJ0nUgfn7kyxWnIB1vkQIadwFEZn9YV0km.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/mHhQ59YJ0nUgfn7kyxWnIB1vkQIadwFEZn9YV0km.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/mHhQ59YJ0nUgfn7kyxWnIB1vkQIadwFEZn9YV0km.jpeg"
+                                }
+                            },
+                            {
+                                "media": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/hmYXDVotq76RwwLUwnlznHK5hNLYcpJq15wAIpZ0.jpeg",
+                                "formats_size": {
+                                    "small": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/small/hmYXDVotq76RwwLUwnlznHK5hNLYcpJq15wAIpZ0.jpeg",
+                                    "medium": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/medium/hmYXDVotq76RwwLUwnlznHK5hNLYcpJq15wAIpZ0.jpeg",
+                                    "large": "https://beddy-public.s3.eu-west-2.amazonaws.com/properties/1726/accommodations/5551/gallery/large/hmYXDVotq76RwwLUwnlznHK5hNLYcpJq15wAIpZ0.jpeg"
+                                }
+                            }
+                        ],
+                        "facilities": [],
+                        "last_room": false,
+                        "quantity": 5,
+                        "accommodation_avail_max": 1,
+                        "min_adults": 1,
+                        "max_adults": 5,
+                        "max_children": 4,
+                        "total_beds": 5,
+                        "base_beds": null,
+                        "guests": {
+                            "NUM_ADULTS": 2,
+                            "BASE_BEDS": null,
+                            "NUM_CHILDREN": 0,
+                            "CHILDREN_AGES": [],
+                            "TOTAL_GUESTS": 2
+                        },
+                        "guest_configuration_id": 0,
+                        "number_of_guests": 2,
+                        "beds_type_choice": true,
+                        "beds_type": [
+                            {
+                                "id": 4,
+                                "name": "Letti singoli"
+                            },
+                            {
+                                "id": 5,
+                                "name": "Letto matrimoniale"
+                            }
+                        ],
+                        "rateplans": {
+                            "28619": {
+                                "rateplan_id": 7344,
+                                "rateplan_name": "Miglior tariffa garantita",
+                                "rateplan_description": "Approfitta dell'esclusiva promozione riservata ai clienti che prenotano dal nostro sito web",
+                                "rateplan_type": "plan",
+                                "rateplan_options": {
+                                    "id": 28168,
+                                    "rateplan_id": 7344,
+                                    "unlockable": 0,
+                                    "discount_value": null,
+                                    "discount_type": null,
+                                    "discount_to_treatments": 0,
+                                    "facebook_access": 0,
+                                    "facebook_like": 0,
+                                    "newsletter": 0,
+                                    "free_text": "",
+                                    "in_evidence": 0,
+                                    "in_evidence_from": null,
+                                    "in_evidence_to": null,
+                                    "show_in_xml": 0,
+                                    "status": 1
+                                },
+                                "ignore_restriction": false,
+                                "policies": {
+                                    "id": 3982,
+                                    "deposit": 0,
+                                    "free_cancellation": 1,
+                                    "addons_to_deposit": 0,
+                                    "pay_on_arrival": 1,
+                                    "pay_on_departure": 0,
+                                    "name": "Cancellazione gratuita 7 giorni",
+                                    "description": "<p>Puoi cancellare gratuitamente fino a\u00a0 7 giorni prima dell'arrivo.</p><p>Se cancelli nei\u00a0 7 giorni prima dell'arrivo ti verr\u00e0 addebitato il 100% del costo totale.</p><p>In caso di mancata presentazione ti verr\u00e0 addebitato l'intero importo del soggiorno.</p>",
+                                    "show_custom_text_policy": false,
+                                    "description_with_dates": "<p>Puoi cancellare gratuitamente fino alle 23:59 del 25/04/2025.</p><p>Se cancelli dopo le 23:59 del 25/04/2025 ti verr\u00e0 addebitato il 100% del costo totale.</p>",
+                                    "deposit_description": "."
+                                },
+                                "persuasive_sentences": [
+                                    {
+                                        "icon": "fas fa-star",
+                                        "label": "Cancellazione gratuita fino al 26/04/2025",
+                                        "icon_color": "#75da94",
+                                        "key": "free_cancellation_until",
+                                        "date_limit": "26/04/2025"
+                                    },
+                                    {
+                                        "icon": "fas fa-exclamation-circle",
+                                        "label": "Termini e condizioni di prenotazione",
+                                        "icon_color": "#adb5bd",
+                                        "key": "cancellation_term"
+                                    }
+                                ],
+                                "price_list_id": 0,
+                                "accommodation_rateplan_id": 28619,
+                                "treatments": {
+                                    "1": {
+                                        "treatment_id": 1,
+                                        "treatment_name": "Solo Pernottamento",
+                                        "days": {
+                                            "2025-05-03": {
+                                                "price_without_treatments": "115.00",
+                                                "price_supplement_treatments": "0.00",
+                                                "total_price": "115.00",
+                                                "treatments_surplus": "0.00"
+                                            },
+                                            "2025-05-04": {
+                                                "price_without_treatments": "115.00",
+                                                "price_supplement_treatments": "0.00",
+                                                "total_price": "115.00",
+                                                "treatments_surplus": "0.00"
+                                            },
+                                            "2025-05-05": {
+                                                "price_without_treatments": "115.00",
+                                                "price_supplement_treatments": "0.00",
+                                                "total_price": "115.00",
+                                                "treatments_surplus": "0.00"
+                                            }
+                                        },
+                                        "totals": {
+                                            "total_price": "345.00",
+                                            "old_price": "345.00",
+                                            "discount_amount": "0.00",
+                                            "percentage": "0.00"
+                                        }
+                                    }
+                                },
+                                "price_comparator": [
+                                    {
+                                        "channel_name": "Booking",
+                                        "price": "400.20"
+                                    },
+                                    {
+                                        "channel_name": "Beddy",
+                                        "is_website": true,
+                                        "price": "345.00",
+                                        "total_guest": 2,
+                                        "date_from": "2025-05-03",
+                                        "date_to": "2025-05-06"
+                                    }
+                                ],
+                                "order": 1
+                            }
+                        }
+                    }
+                ],
+                "order": 1,
+                "bundle_banner": []
+            }
+        },
+        "avail_mapping": {
+            "5545": {
+                "qty": 1,
+                "is_parent": true,
+                "is_child": false,
+                "is_sum_parent": false,
+                "is_sum": false,
+                "accommodation_parent_id": null,
+                "accommodation_child_id": [
+                    5551
+                ]
+            },
+            "5551": {
+                "qty": 1,
+                "is_parent": false,
+                "is_child": true,
+                "is_sum_parent": false,
+                "is_sum": false,
+                "accommodation_parent_id": 5545,
+                "accommodation_child_id": []
+            }
+        },
+        "SID": "65ba66646f361ff06a4d4c16aeaf95b9"
+    },
+    "meta": {
+        "status": "success",
+        "operation_code": "T20250423093300680897ac18343"
+    }
+}

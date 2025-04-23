@@ -13,3 +13,4 @@ pyaml_env
 dotenv
 python-dotenv
 pytz
+jmespath

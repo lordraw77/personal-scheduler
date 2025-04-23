@@ -27,12 +27,11 @@
         "Content-Type": "application/json"
         }]'
       printout: True
-      saveonvar: outputVarPPP 
+      saveonvar: dataJson 
       verify: False
-  - name: make http get 
-    task-network.httpget: 
-      host: "127.0.0.1" 
-      port: 9999
-      get: "/zSirtaAnagraficaList"
+  - name: exec json 
+    task-utils.jsonxpath: 
+      jsonvar: dataJson
+      xpath: length(data.search_results.*.accommodations[].[accommodation_id])
       printout: True
-      saveonvar: outputVarPPP 
+      saveonvar: outputDataJson

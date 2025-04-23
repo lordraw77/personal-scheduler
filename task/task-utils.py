@@ -2,6 +2,8 @@ import time
 import inspect
 import json
 import util.common as common
+import jmespath
+
 gdict={}
 
 myself = lambda: inspect.stack()[1][3]
@@ -9,6 +11,21 @@ myself = lambda: inspect.stack()[1][3]
 def setgdict(self,gdict):
     self.gdict=gdict
     
+def jsonxpath(self,param):
+    common.logstart(myself())
+    if common.checkandloadparam(self,myself(),('jsonvar','xpath',),param):
+        data= gdict[param['jsonvar']]
+        vxpath=param['xpath']
+        valjmes = jmespath.search(vxpath, data)
+        if common.checkparam('printout',param):
+            printout=param['printout']
+            if printout:
+                print(valjmes)
+        if common.checkparam('saveonvar',param):
+            saveonvar=param['saveonvar']
+            gdict[saveonvar]=valjmes
+    common.logend(myself())
+            
 def setsleep(self,param):
     common.logstart(myself())
     if common.checkandloadparam(self,myself(),('seconds',),param):
@@ -23,7 +40,6 @@ def printvar(self,param):
     common.logstart(myself())
     if common.checkandloadparam(self,myself(),('varname',),param):
         varname=gdict['varname']
-        
         print (gdict[varname])
         common.logend(myself())
     else:
